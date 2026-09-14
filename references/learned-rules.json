@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "rules": [
+    {
+      "id": "correction-0001",
+      "created_at": "2026-09-14T13:50:40.802718+00:00",
+      "scope": "global",
+      "source": "可以修复一下skill：风格图只作为整体风格参考，最终排版要根据具体内容安排，不能后续所有图片都沿用参考图的左右排版。",
+      "rule": "选择风格样张后，仅继承其视觉风格不变量；每页版式必须依据该页内容类型、教学动作、信息密度、层级与阅读顺序独立设计，并保持有控制的版式变化。",
+      "applies_to": "all future ppt-page-image projects",
+      "avoid": "using the selected sample composition or one text-image split as the deck-wide layout default",
+      "supersedes": null,
+      "status": "superseded"
+    },
+    {
+      "id": "correction-0002",
+      "created_at": "2026-09-14T16:40:24.922969+00:00",
+      "scope": "global",
+      "source": "版式固化检查不需要机械执行，好的板块和版式可以复用。",
+      "rule": "风格样张不构成全套固定模板，但优秀版式家族可在内容结构、层级和教学动作相容的页面中复用；只有不适配内容、损害阅读层级或造成明显有害单调时才调整。",
+      "applies_to": "all future ppt-page-image projects",
+      "avoid": "forcing layout variation or full-page regeneration merely because a composition repeats",
+      "supersedes": "correction-0001",
+      "status": "active"
+    }
+  ]
+}

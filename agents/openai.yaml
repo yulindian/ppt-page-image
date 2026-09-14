@@ -1,0 +1,6 @@
+interface:
+  display_name: "PPT Page Image"
+  short_description: "从内容策划到完整页面图片 PDF 的生产、审核与最终交付"
+  default_prompt: "Use $ppt-page-image to turn my content into a fully audited image-based PDF presentation."
+policy:
+  allow_implicit_invocation: true
