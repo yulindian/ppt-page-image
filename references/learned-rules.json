@@ -22,6 +22,50 @@
       "avoid": "forcing layout variation or full-page regeneration merely because a composition repeats",
       "supersedes": "correction-0001",
       "status": "active"
+    },
+    {
+      "id": "correction-0003",
+      "created_at": "2026-09-15T00:43:13.986497+00:00",
+      "scope": "global",
+      "source": "User requires prompt planning and repairable font delivery",
+      "rule": "Before final-page generation, create and cross-check PPT内容大纲.txt, 风格提示词.txt, and 字体说明.txt; use the font-role typography wording in every page prompt; deliver a nonempty fonts package for later repair.",
+      "applies_to": "planning, prompts, generation, QA, and final delivery",
+      "avoid": "Treating font notes as post-production documentation or omitting the prompt-outline stage and font files",
+      "supersedes": null,
+      "status": "active"
+    },
+    {
+      "id": "correction-0004",
+      "created_at": "2026-09-15T00:43:28.146475+00:00",
+      "scope": "global",
+      "source": "User requires repair-friendly illustration separation",
+      "rule": "Keep illustration zones free of incidental writing, labels, numbers, signs, posters, book text, screen text, board writing, packaging copy, and pseudo-writing unless an exact lesson label is required in a controlled reading zone.",
+      "applies_to": "style prompts, page prompts, image generation, and visual QA",
+      "avoid": "Embedding audience-facing copy or decorative pseudo-text inside illustrations",
+      "supersedes": null,
+      "status": "active"
+    },
+    {
+      "id": "correction-0005",
+      "created_at": "2026-09-15T00:43:39.309756+00:00",
+      "scope": "global",
+      "source": "User requires clean main-title backgrounds",
+      "rule": "When a main title is prominent, place it on a calm high-contrast field without complex writing, signs, posters, dense objects, busy patterns, or text-like texture.",
+      "applies_to": "covers, section pages, title-heavy pages, prompts, generation, and visual QA",
+      "avoid": "Placing prominent titles over busy or text-like backgrounds",
+      "supersedes": null,
+      "status": "active"
+    },
+    {
+      "id": "correction-0006",
+      "created_at": "2026-09-15T00:43:51.024928+00:00",
+      "scope": "global",
+      "source": "User defines the no-reference style-selection workflow",
+      "rule": "When no usable style image exists and style references are requested, infer four audience- and topic-fit 16:9 sample directions, recommend and stop for selection; record selection feedback and rejected traits, then create the mandatory planning package before image production.",
+      "applies_to": "style gate, planning, prompt outline, and generation order",
+      "avoid": "Offering generic styles, treating the chosen composition as a template, or starting final images before prompt planning",
+      "supersedes": null,
+      "status": "active"
     }
   ]
 }

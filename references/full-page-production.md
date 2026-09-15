@@ -28,8 +28,8 @@ The four-style and first-five gates are separate: style selection approves direc
 
 For each page:
 
-1. load locked copy, style fingerprint, layout family, and active corrections;
-2. generate one complete page;
+1. load locked copy, style fingerprint, layout family, font-role mapping, page prompt outline, and active corrections;
+2. generate one complete page with a dedicated reading zone, a text-free illustration zone, and a calm title field when applicable;
 3. run technical, OCR, and visual checks;
 4. mark `PASS` only when every check passes;
 5. regenerate the whole page when any check fails;

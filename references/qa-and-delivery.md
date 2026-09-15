@@ -16,6 +16,8 @@ Visual checks:
 - distinct reading, image, and decoration zones;
 - no busy scene behind dense copy;
 - no malformed subject or unintended text;
+- illustration zones are text-free unless exact lesson content requires a controlled label;
+- a prominent main title sits on a calm field without writing, signs, busy text-like texture, or dense object competition;
 - no watermark, QR code, logo, account, platform mark, signature, institution, or page number;
 - style fingerprint and layout family remain consistent.
 
@@ -25,11 +27,15 @@ Any failure triggers complete-page regeneration.
 
 Inspect a montage for page count, order, palette drift, apparent type-size drift, family consistency, duplication, harmful monotony, unexplained changes, and all user corrections. Repeated composition is allowed when the pages share compatible structure, hierarchy, and teaching action. Repetition becomes a defect only when the layout does not fit the content, weakens hierarchy or reading order, or makes the teaching sequence meaningfully monotonous. Regenerate only pages with an actual layout problem; do not force whole-page regeneration merely to make the deck look more varied. A page that passes alone can still fail whole-deck consistency and must then be regenerated in full.
 
-## Font Notes
+## Planning Package QA
 
-Create `字体说明.txt` containing selection rationale, visual role mappings, display name, weight when known, fallback or similar style, page-by-page audience-facing mappings, prompt typography wording, and notice that image generation only approximates fonts.
+Confirm that `PPT内容大纲.txt`, `风格提示词.txt`, and `字体说明.txt` exist and are nonempty before final-page production and again before delivery. Cross-check page count, order, exact copy, selected-style feedback, font-role tokens, packaged filenames, image asset names, and every page prompt. A correction is incomplete until the affected planning files are updated.
 
-Do not package font files or create a `fonts/` folder for this Skill's final delivery. Font names are style targets for prompting and documentation, not proof that the image model used local font files.
+## Font Notes And Package
+
+Create `字体说明.txt` before generation. Include selection rationale, local inspection result, display name, weight, source path, packaged filename, fallback, page-by-page or line-by-line audience-facing mappings, prompt typography wording, licensing notes, repair guidance, and notice that image generation only approximates fonts.
+
+Package a nonempty `fonts/` folder containing the selected locally available `.ttf`, `.otf`, or `.ttc` files when redistribution is permitted. Replace unavailable or nonredistributable fonts with packageable alternatives and update the notes and prompts. Font files are repair resources and visual targets, not proof that the image model used them exactly.
 
 ## PDF And Final Directory
 
@@ -37,12 +43,16 @@ Package only `PASS` images in natural filename order with `scripts/images_to_pdf
 
 Then verify page count, render every PDF page back to an image, and inspect order, borders, crop, clarity, color, and text. Recheck first, last, densest, and regenerated pages at readable scale.
 
-The delivery directory contains exactly:
+The delivery directory contains:
 
 ```text
 <PPT名称>/
 |-- <PPT名称>.pdf
-`-- 字体说明.txt
+|-- PPT内容大纲.txt
+|-- 风格提示词.txt
+|-- 字体说明.txt
+|-- fonts/
+`-- images/                  optional; only when useful repair/source assets exist
 ```
 
-Keep samples, page images, prompts, manifests, OCR output, montages, compressed images, render checks, reports, fonts, and PPTX files in temporary storage. They may be shown during review but never enter this Skill's final delivery directory merely for convenience. A request to retain those artifacts is a separate deliverable outside the `ppt-page-image` contract. Run `scripts/validate_delivery.py`. Do not report completion unless validation passes and PDF render-back was inspected.
+When `images/` exists, it must be nonempty and every file must be listed in `风格提示词.txt` with its source, role, and page use. Keep unselected samples, transient page images, manifests, OCR output, montages, compressed images, render checks, reports, and PPTX files in temporary storage. Run `scripts/validate_delivery.py`. Do not report completion unless validation passes and PDF render-back was inspected.

@@ -29,6 +29,8 @@ Build the complete ordered page list before generation. Record for every page:
 
 Group repeated pages into stable families such as cover, directory, section, explanation, comparison, process, exercise, summary, and closing. A family fixes hierarchy, title region, reading region, image region, margins, palette roles, and decoration density while subject and copy may vary.
 
+After style selection, materialize this plan as `PPT内容大纲.txt` using [planning package](planning-package.md). It is a mandatory production input and final deliverable, not an internal scratch outline.
+
 ## Copy And Density
 
 Mark verbatim copy as locked. Keep internal metadata and sales packaging language off audience-facing pages.

@@ -4,11 +4,13 @@ Read this before generating style samples or final pages.
 
 ## Four-Style Gate
 
-Trigger when neither a usable style prompt nor a usable style reference image exists. Waive it only when the user explicitly says to skip four-style selection and authorizes autonomous style choice.
+Trigger when neither a usable style prompt nor a usable style reference image exists, and whenever the user explicitly asks for style reference images. Waive it only when the user explicitly says to skip four-style selection and authorizes autonomous style choice.
+
+Infer the four directions from the presentation topic, audience age and preferences, use scenario, subject character, content tone, density, and output context. Do not offer generic trends detached from the material.
 
 Use one representative page and the same minimal real copy for all four samples. Generate four complete 16:9 page images that differ materially in composition, palette, material, typography mood, image treatment, whitespace, and visual density. Do not submit four color variants.
 
-Evaluate topic fit, audience fit, readability, text capacity, multi-page extensibility, consistency potential, generation stability, and correction cost. Recommend the strongest direction, explain tradeoffs briefly, display all four, and stop.
+Evaluate topic fit, audience fit, readability, text capacity, multi-page extensibility, consistency potential, generation stability, and correction cost. Recommend the strongest direction, explain tradeoffs briefly, display all four, and stop. After selection, explain which visual traits are useful, collect the user's feedback and rejected traits, and record them before prompt planning begins.
 
 ## Style Fingerprint
 
@@ -34,6 +36,10 @@ Across the page plan, assign a layout family to every page before generation. In
 
 ## Prompt Shape
 
+Before writing final prompts, read `字体说明.txt`. Convert each font role into visible typography language covering stroke character, width, weight, contrast, spacing, alignment, and mood. Font names are visual targets and repair references; the image model may only approximate them.
+
+Store the global prompt and the full page-generation prompt outline for every page in `风格提示词.txt` before generating any final page. This mandatory prompt-outline stage follows [planning package](planning-package.md).
+
 The global prompt states theme, audience, 16:9 full-bleed format, style invariants, typography direction, permitted layout families, active corrections, and global negative constraints. It must explicitly say that the reference composition is an optional layout family rather than a mandatory template.
 
 Every page prompt contains:
@@ -55,10 +61,16 @@ Create one complete 16:9 presentation page image, edge to edge. Render the backg
 
 ## Readability And Negative Constraints
 
-Every body page names the relationship chosen for that page, such as left text/right image, top text/bottom image, question area/separate illustration, grid/separate explanation, or calm pale reading area with surrounding scene. Reuse a relationship when it continues to fit; do not default to one merely because it appeared in the selected sample. Dense copy must not be scattered through signs, speech bubbles, stickers, windows, boards, characters, or scenery.
+Every body page names the relationship chosen for that page, such as left text/right image, top text/bottom image, question area/separate illustration, grid/separate explanation, or calm pale reading area with surrounding scene. Reuse a relationship when it continues to fit; do not default to one merely because it appeared in the selected sample.
+
+Keep approved page copy in a dedicated reading zone and keep the illustration zone text-free whenever the subject does not require text. Explicitly forbid writing, labels, numbers, signs, posters, book-page text, screen UI, board writing, badges, tickets, packaging copy, and pseudo-writing inside illustrations. If a required short label belongs to the lesson content, place it in the controlled reading zone instead of embedding it casually in scenery.
+
+When the main title is prominent, reserve a calm, high-contrast title field. The background behind it must avoid complex writing, signs, posters, dense objects, busy patterns, and text-like texture. Dense copy must never be scattered through speech bubbles, stickers, windows, boards, characters, or scenery.
 
 - No watermark, QR code, logo, page number, account name, platform mark, byline, signature, institution name, or copyright corner.
 - No pseudo-writing, garbled text, incidental labels, decorative paragraphs, or fake chart values.
+- No incidental writing or text-like marks inside illustration zones.
+- No complex writing, signage, dense objects, or busy text-like texture behind a prominent main title.
 - No unused border, white edge, gray frame, transparent edge, crop mark, or unfilled canvas.
 - No blank underline placeholder unless explicitly requested.
 - No all-over collage of copy, stickers, speech bubbles, labels, answer boxes, characters, and scenery.
