@@ -20,16 +20,17 @@ Visual checks:
 - a prominent main title sits on a calm field without writing, signs, busy text-like texture, or dense object competition;
 - no watermark, QR code, logo, account, platform mark, signature, institution, or page number;
 - style fingerprint and layout family remain consistent.
+- every major element has a visible communication purpose and the page does not rely on generic AI spectacle, template-like copy, or purposeless decoration.
 
 Any failure triggers complete-page regeneration.
 
 ## Whole-Deck QA
 
-Inspect a montage for page count, order, palette drift, apparent type-size drift, family consistency, duplication, harmful monotony, unexplained changes, and all user corrections. Repeated composition is allowed when the pages share compatible structure, hierarchy, and teaching action. Repetition becomes a defect only when the layout does not fit the content, weakens hierarchy or reading order, or makes the teaching sequence meaningfully monotonous. Regenerate only pages with an actual layout problem; do not force whole-page regeneration merely to make the deck look more varied. A page that passes alone can still fail whole-deck consistency and must then be regenerated in full.
+Inspect a montage for page count, order, palette drift, apparent type-size drift, family consistency, duplication, harmful monotony, unexplained changes, generic AI aesthetics, and all user corrections. Repeated composition is allowed when the pages share compatible structure, hierarchy, and teaching action. Repetition becomes a defect only when the layout does not fit the content, weakens hierarchy or reading order, or makes the teaching sequence meaningfully monotonous. Regenerate only pages with an actual layout problem; do not force whole-page regeneration merely to make the deck look more varied. A page that passes alone can still fail whole-deck consistency and must then be regenerated in full.
 
 ## Planning Package QA
 
-Confirm that `PPT内容大纲.txt`, `风格提示词.txt`, and `字体说明.txt` exist and are nonempty before final-page production and again before delivery. Cross-check page count, order, exact copy, selected-style feedback, font-role tokens, packaged filenames, image asset names, and every page prompt. A correction is incomplete until the affected planning files are updated.
+Confirm that `PPT内容大纲.txt`, `风格提示词.txt`, and `字体说明.txt` exist and are nonempty before final-page production and again before delivery. Cross-check page count, order, exact copy, selected-style feedback, content evidence, design rationale, element budget, font-role tokens, packaged filenames, image asset names, and every page prompt. A correction is incomplete until the affected planning files are updated.
 
 ## Font Notes And Package
 

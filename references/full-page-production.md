@@ -24,12 +24,27 @@ Run internal QA, create a montage, recommend needed fixes, then stop for approva
 
 The four-style and first-five gates are separate: style selection approves direction; first-five approval validates application to real content.
 
+## Pre-Generation Anti-AI Gate
+
+Before sending any page prompt to the image model, reject it unless all answers are explicit:
+
+- What specific content evidence makes this visual concept belong to this topic and audience?
+- What is the one-sentence design rationale for its hierarchy, layout, imagery, and density?
+- What is the element budget, and what communication purpose does every major element serve?
+- Has template-like copy or generic motivational filler been removed unless it is locked source text?
+- Has unnecessary decoration been removed, including unjustified glow, gradients, floating cards, stickers, icons, sparkles, and ornamental texture?
+- Are people, objects, period details, spatial relationships, and recurring subjects plausible and consistent?
+- Does the prompt request plausible subject details rather than vague beauty, luxury, cinematic polish, or dreaminess?
+- Are typography, reading zone, text-free illustration zone, and title field described concretely?
+
+Revise the plan and prompt before generation when any answer is missing. Do not rely on final QA to repair an under-specified concept.
+
 ## Production Loop
 
 For each page:
 
-1. load locked copy, style fingerprint, layout family, font-role mapping, page prompt outline, and active corrections;
-2. generate one complete page with a dedicated reading zone, a text-free illustration zone, and a calm title field when applicable;
+1. load locked copy, style fingerprint, layout family, font-role mapping, page prompt outline, anti-AI rationale, element budget, and active corrections;
+2. pass the pre-generation gate, then generate one complete page with a dedicated reading zone, a text-free illustration zone, and a calm title field when applicable;
 3. run technical, OCR, and visual checks;
 4. mark `PASS` only when every check passes;
 5. regenerate the whole page when any check fails;

@@ -44,3 +44,13 @@ different content structures. Expected behavior: preserve the visual style but
 choose each layout from content needs. Reuse a good layout family on compatible
 pages; do not make it the global template and do not force variation merely
 because a composition repeats.
+
+## Anti-AI Controls Begin Before Generation
+
+The requested topic could easily become a generic polished AI poster. Expected
+behavior: derive each page's visual concept from specific content evidence and
+audience context; record a design rationale and element budget; reject
+template-like copy, purposeless decoration, generic glow/gradient/card effects,
+and implausible subject details before generation. The page prompt names the
+purpose of every major visual element and uses concrete editorial or classroom
+references instead of vague requests for a "premium" or "dreamy" look.

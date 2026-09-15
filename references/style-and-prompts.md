@@ -12,6 +12,8 @@ Use one representative page and the same minimal real copy for all four samples.
 
 Evaluate topic fit, audience fit, readability, text capacity, multi-page extensibility, consistency potential, generation stability, and correction cost. Recommend the strongest direction, explain tradeoffs briefly, display all four, and stop. After selection, explain which visual traits are useful, collect the user's feedback and rejected traits, and record them before prompt planning begins.
 
+Before presenting samples, reject any direction that still looks like a generic AI poster: interchangeable subject matter, vague luxury or dreamy styling, excessive glow or gradients, floating-card clutter, decorative icons without meaning, pseudo-writing, implausible objects, or a composition that would work unchanged after replacing the title with an unrelated topic.
+
 ## Style Fingerprint
 
 After selection, record palette roles, background/material, title/body typography mood, image treatment, whitespace, decoration density, allowed variation, and rejected traits. These are style invariants.
@@ -34,6 +36,21 @@ Examples of content-driven structures include an immersive or centered cover, a 
 
 Across the page plan, assign a layout family to every page before generation. Intentionally reuse good layout families for pages with compatible structure, hierarchy, and teaching action. Repetition alone is not a defect. Change a repeated layout only when it no longer fits the content, weakens hierarchy or reading order, or makes the teaching sequence meaningfully monotonous. Consistency comes from both the style fingerprint and well-managed layout families.
 
+## Anti-AI-Aesthetic Prompting
+
+Reduce generic AI aesthetics before generation, not only during QA:
+
+1. **Start from content evidence.** Name specific source-grounded subjects, objects, actions, relationships, era details, materials, quotations, or diagram logic. Do not invent a generic decorative scene merely to fill space.
+2. **State the design rationale.** Explain in one sentence why the selected hierarchy, layout, image treatment, and density serve this page's teaching or communication goal.
+3. **Set an element budget.** Prefer one focal subject, only the supporting elements needed for comprehension, and restrained decoration. Empty space is intentional and does not need to be filled.
+4. **Assign every major element a purpose.** Each illustration, icon, line, texture, badge, or color block must support meaning, grouping, navigation, emphasis, or atmosphere grounded in the content. Remove elements with no stated purpose.
+5. **Use concrete design references.** Describe an applicable editorial, textbook, archival, museum-label, field-guide, classroom-material, or children's-book visual language. Avoid relying on vague requests such as premium, dreamy, cinematic, magical, sophisticated, or highly polished.
+6. **Use source-specific copy.** Preserve locked teaching language and remove template-like filler such as generic journey, exploration, discovery, future, or inspiration slogans unless the source or user requires it.
+7. **Control finish.** Prefer coherent print-like materials, restrained lighting, limited effects, and believable depth. Avoid generic AI aesthetics such as purple-blue spectacle gradients, neon rim light, glossy floating cards, excessive rounded panels, sticker/icon scatter, sparkles, bokeh, or ornamental detail everywhere unless specifically justified.
+8. **Demand plausible subject details.** Specify age, period, setting, clothing, object structure, spatial relationships, and recurring-character continuity when relevant. Do not add fake authenticity through deliberate damage or random imperfection.
+
+The goal is not to make the page rough. The goal is to make every visible decision feel necessary, specific to the content, and consistent with a human editorial point of view.
+
 ## Prompt Shape
 
 Before writing final prompts, read `字体说明.txt`. Convert each font role into visible typography language covering stroke character, width, weight, contrast, spacing, alignment, and mood. Font names are visual targets and repair references; the image model may only approximate them.
@@ -52,6 +69,8 @@ Every page prompt contains:
 6. fixed family traits and permitted variation;
 7. page-specific negative constraints;
 8. complete-page generation statement.
+
+It also names the content evidence, design rationale, element budget, purpose of each major visual element, plausible subject details, and the generic AI traits forbidden on that page.
 
 Always include this meaning:
 

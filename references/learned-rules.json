@@ -66,6 +66,17 @@
       "avoid": "Offering generic styles, treating the chosen composition as a template, or starting final images before prompt planning",
       "supersedes": null,
       "status": "active"
+    },
+    {
+      "id": "correction-0007",
+      "created_at": "2026-09-15T01:20:23.284497+00:00",
+      "scope": "global",
+      "source": "User requires AI-aesthetic reduction throughout prompting and production, not only final QA",
+      "rule": "Reduce generic AI aesthetics before generation: derive each visual concept from topic- and audience-specific content evidence; record a one-sentence design rationale and restrained element budget; state the purpose of every major element; remove template-like copy, purposeless decoration, vague luxury or dreamy styling, generic glow/gradient/card effects, and implausible subject details before sending the prompt to the image model.",
+      "applies_to": "style samples, planning package, global prompts, page prompts, pre-generation gate, production, and QA",
+      "avoid": "Treating anti-AI quality as a final review item only",
+      "supersedes": null,
+      "status": "active"
     }
   ]
 }

@@ -18,11 +18,15 @@ Start with PPT name, audience, scenario, language, page count, source authority,
 - page index, page type, communication or teaching goal;
 - exact title and exact visible copy;
 - required facts and source notes;
+- content evidence: specific people, objects, places, actions, era details, quotations, diagrams, or material traits that justify the visual concept;
+- design rationale: one concise reason why this hierarchy, layout, imagery, and density serve the page's teaching or communication goal;
+- element budget: one focal element, the minimum supporting elements, and the decoration limit;
 - layout family, reading order, and density risk;
 - separate text, illustration, and decoration zones;
 - visual subject and image-text relationship;
 - title and body font-role tokens that map to `字体说明.txt`;
 - page-specific negative constraints.
+- generic AI traits to avoid on this page, including irrelevant glow, gradient spectacle, floating cards, decorative icons, sticker clutter, template-like slogans, and implausible details.
 
 ## 风格提示词.txt
 
@@ -36,9 +40,10 @@ Include:
 - asset inventory for every retained item in `images/`, including source, purpose, and page use;
 - one reusable global prompt;
 - a page-generation prompt outline for every page;
+- the anti-AI-aesthetic rules, including content evidence, design rationale, element budget, element-purpose statements, and banned generic AI traits;
 - global negative constraints and prompt self-checks.
 
-Every page-generation prompt outline must carry the exact copy, font-role wording, layout and reading order, separate text and text-free illustration zones, visual subject, page-specific negatives, and the complete-page generation statement.
+Every page-generation prompt outline must carry the exact copy, font-role wording, layout and reading order, content evidence, design rationale, element budget, the purpose of every major visual element, separate text and text-free illustration zones, visual subject, page-specific negatives, and the complete-page generation statement.
 
 ## 字体说明.txt
 

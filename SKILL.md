@@ -27,11 +27,11 @@ Create the complete presentation workflow from content to PDF. Every final page 
 
 1. Read chat requirements and all supplied materials. Load active global correction rules from `references/learned-rules.json`.
 2. Read [intake and planning](references/intake-and-planning.md). Assign material roles, resolve material conflicts, build the complete page list, and lock exact visible copy.
-3. Read [style and prompts](references/style-and-prompts.md). When no usable style reference exists, or the user asks for style reference images, infer four suitable directions from the topic, audience, scenario, subject tone, and content density. Generate four materially different complete 16:9 samples, recommend one, and stop for selection. Skip only when the user explicitly authorizes autonomous style choice without samples.
+3. Read [style and prompts](references/style-and-prompts.md). When no usable style reference exists, or the user asks for style reference images, infer four suitable directions from the topic, audience, scenario, subject tone, content evidence, and density. Generate four materially different complete 16:9 samples, reject generic AI aesthetics before presenting them, recommend one, and stop for selection. Skip only when the user explicitly authorizes autonomous style choice without samples.
 4. After selection, explain the useful traits, collect the user's feedback and rejected traits, then extract a style fingerprint. Keep palette roles, material, typography mood, image treatment, whitespace, and decoration density; do not turn the sample's composition into a deck-wide template.
-5. Read [planning package](references/planning-package.md). Create and cross-check `PPT内容大纲.txt`, `风格提示词.txt`, and `字体说明.txt`; package selected fonts in `fonts/`, and prepare optional `images/`. This stage is mandatory and happens before final-page generation.
-6. Build the global prompt and every page prompt from the planning package. Each prompt carries exact copy, a content-driven layout, font-role wording from `字体说明.txt`, a dedicated reading zone, a text-free illustration zone, a calm title field when the main title is prominent, negative constraints, and the complete-image statement. Reuse a proven layout family when it fits; do not force variation for its own sake.
-7. Read [full-page production](references/full-page-production.md). Generate and internally audit the first five pages, or all pages when fewer than five, then create a montage and stop for approval. Continue directly only when the user explicitly requests full production without the first-five review.
+5. Read [planning package](references/planning-package.md). Create and cross-check `PPT内容大纲.txt`, `风格提示词.txt`, and `字体说明.txt`; package selected fonts in `fonts/`, and prepare optional `images/`. For every page record its design rationale, content evidence, element budget, and generic AI traits to avoid. This stage is mandatory and happens before final-page generation.
+6. Build the global prompt and every page prompt from the planning package. Each prompt carries exact copy, a content-driven layout, font-role wording from `字体说明.txt`, concrete subject and editorial references, the purpose of every major element, a restrained element budget, a dedicated reading zone, a text-free illustration zone, a calm title field when the main title is prominent, anti-AI-aesthetic constraints, and the complete-image statement. Reuse a proven layout family when it fits; do not force variation for its own sake.
+7. Read [full-page production](references/full-page-production.md). Apply the pre-generation anti-AI gate before generation, then generate and internally audit the first five pages, or all pages when fewer than five. Create a montage and stop for approval. Continue directly only when the user explicitly requests full production without the first-five review.
 8. Apply conversation corrections immediately. Read [learning and corrections](references/learning-and-corrections.md), classify scope conservatively, record persistent rules with `scripts/record_correction.py`, update every affected planning file, and regenerate every affected page in full.
 9. Read [QA and delivery](references/qa-and-delivery.md). Run planning-package, font-package, asset, technical, OCR, visual, whole-deck, PDF, and delivery-folder checks. A page enters the PDF only after all applicable checks pass.
 10. Package ordered pages with `scripts/images_to_pdf.py`. Render the PDF back to images and inspect it. Run `scripts/validate_delivery.py` before reporting completion.
@@ -51,6 +51,7 @@ After three failed full-page generations for the same defect, stop and report th
 | Style selected | Record selection feedback and rejected traits before writing the planning package |
 | Selected sample uses one composition | Keep its style; reuse that layout only where the page content fits it |
 | Prompt-outline stage | Produce and cross-check all three planning `.txt` files before generating pages |
+| Page looks generically "AI polished" | Strengthen content evidence, design rationale, element purpose, and restraint before generation |
 | Illustration contains text-like detail | Regenerate with a dedicated text-free illustration zone |
 | Prominent main title | Use a calm, clean background without writing, signs, or busy text-like detail |
 | Chinese text is wrong | Regenerate the complete page |
@@ -65,6 +66,9 @@ After three failed full-page generations for the same defect, stop and report th
 - Treating “最终是一张图” as permission to build it from layers.
 - Skipping four style samples because the deadline is tight.
 - Skipping the prompt-outline stage and improvising prompts page by page.
+- Using vague style words such as premium, dreamy, cinematic, or sophisticated without content-specific design evidence.
+- Adding glow, gradients, floating cards, stickers, icons, or characters without a communication purpose.
+- Keeping template-like filler copy such as “开启探索之旅” when it is not required source text.
 - Using a selected sample as a fixed background.
 - Turning the selected sample's composition into the deck-wide default without checking whether each page's content fits it.
 - Allowing incidental writing, labels, signs, book text, or screen text inside illustrations.
