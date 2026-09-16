@@ -68,3 +68,5 @@ This folder is optional. Use it only for concrete source images, selected style 
 ## Cross-Check
 
 Before generation and after every accepted correction, verify that page count, page titles, exact copy, style choices, font-role tokens, packaged filenames, asset names, and per-page prompts agree across all three files. Update the planning package before regenerating affected pages.
+
+`PPT内容大纲.txt` is the authority for page order, page count, exact audience-facing copy, and page families. `风格提示词.txt` and `字体说明.txt` must derive from it; they must not independently change titles, body copy, answers, facts, or page count. During production, keep internal state in `.work/project-state.json`; do not deliver that file.

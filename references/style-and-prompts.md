@@ -36,6 +36,16 @@ Examples of content-driven structures include an immersive or centered cover, a 
 
 Across the page plan, assign a layout family to every page before generation. Intentionally reuse good layout families for pages with compatible structure, hierarchy, and teaching action. Repetition alone is not a defect. Change a repeated layout only when it no longer fits the content, weakens hierarchy or reading order, or makes the teaching sequence meaningfully monotonous. Consistency comes from both the style fingerprint and well-managed layout families.
 
+## Viewer-Perspective Hierarchy Gate
+
+Before accepting a style sample, planning package, first-five montage, or final deck, inspect it as a real viewer would. Ask what the eye notices first, second, and third. The page fails when the supporting illustration area, side scene, decoration, or repeated composition competes with or steals attention from the main title, key teaching point, question, or reading task.
+
+For title-heavy pages, especially covers and section pages, the topic must dominate the first glance. Supporting scenes should frame, contextualize, or lead toward the topic; they must not occupy so much contrast, detail, face count, or color weight that the viewer studies the side illustration before understanding the lesson theme. Reduce the supporting area, simplify it, move it below, soften contrast, or choose a different layout family when the theme is visually demoted.
+
+For a deck sequence, do not judge pages only one by one. View the montage as a learner moving through the lesson. A sequence fails when most pages resolve into the same "text block plus side illustration" pattern, even if each page is individually readable. Repeated left-text/right-image layouts are allowed only when the page types genuinely share the same structure and teaching action; otherwise choose content-specific alternatives such as centered title with surrounding evidence, top question with bottom scenarios, full-width reading field with margin vignettes, route map, comparison grid, classroom board, worksheet sheet, or scene-first page with a small controlled caption.
+
+When a generated page reveals a layout failure, treat it as self-iteration evidence. Name the failure in the project notes, update the planning package and page prompt before regenerating, and inspect related pages for the same pattern. Do not merely ask the image model for "more variety"; specify the new hierarchy, focal order, and content-driven layout so the next generation starts smarter than the failed one.
+
 ## Anti-AI-Aesthetic Prompting
 
 Reduce generic AI aesthetics before generation, not only during QA:
@@ -57,7 +67,7 @@ Before writing final prompts, read `字体说明.txt`. Convert each font role in
 
 Store the global prompt and the full page-generation prompt outline for every page in `风格提示词.txt` before generating any final page. This mandatory prompt-outline stage follows [planning package](planning-package.md).
 
-The global prompt states theme, audience, 16:9 full-bleed format, style invariants, typography direction, permitted layout families, active corrections, and global negative constraints. It must explicitly say that the reference composition is an optional layout family rather than a mandatory template.
+The global prompt states theme, audience, 16:9 full-bleed format, style invariants, typography direction, permitted layout families, active corrections, and global negative constraints. It must explicitly say that the reference composition is an optional layout family rather than a mandatory template. Build prompts with a three-layer structure: global prompt, family prompt, and page-specific differences. Store the final full prompt for each page so QA can trace it back to the planning package.
 
 Every page prompt contains:
 
@@ -70,7 +80,7 @@ Every page prompt contains:
 7. page-specific negative constraints;
 8. complete-page generation statement.
 
-It also names the content evidence, design rationale, element budget, purpose of each major visual element, plausible subject details, and the generic AI traits forbidden on that page.
+It also names the viewer's first-glance focal order, the content evidence, design rationale, element budget, purpose of each major visual element, plausible subject details, and the generic AI traits forbidden on that page. For each page, state why the chosen layout is not merely inherited from the style sample or previous page.
 
 Always include this meaning:
 

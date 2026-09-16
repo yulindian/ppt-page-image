@@ -25,6 +25,8 @@ Infer conservatively. An explicit page number such as “第7页” is page scop
 
 Global rules live in `references/learned-rules.json`. Project rules live in temporary project storage and are not delivered. Read active global rules at the beginning of every task.
 
+Use `scripts/record_correction.py list-active --store references/learned-rules.json` to inspect active rules. Superseded rules remain in history but must not enter ordinary prompts.
+
 Example:
 
 ```powershell
@@ -34,6 +36,8 @@ python scripts/record_correction.py add --store references/learned-rules.json --
 ## Supersession And Conflicts
 
 Never delete history. When a new rule replaces an old rule, pass `--supersedes <id>`; the script marks the old rule `superseded` and appends the new active rule.
+
+Before adding a rule, check whether an active rule with the same scope, rule, and applies-to target already exists. The script rejects duplicates; when the new wording intentionally replaces an old rule, use `--supersedes` instead of adding a parallel rule.
 
 Priority is latest explicit chat instruction, active project rule, active global rule, then defaults. If a global rule conflicts with the current request, follow the current request and record a project exception. Ask only when two current requirements cannot both be satisfied.
 

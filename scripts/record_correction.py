@@ -26,6 +26,14 @@ def next_id(rules: list[dict]) -> str:
     return f"correction-{max(numbers, default=0) + 1:04d}"
 
 
+def normalize(value: object) -> str:
+    return re.sub(r"\s+", " ", str(value or "")).strip().lower()
+
+
+def active_rules(data: dict) -> list[dict]:
+    return [rule for rule in data["rules"] if rule.get("status") == "active"]
+
+
 def atomic_write(path: Path, data: dict) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_name(f"{path.name}.tmp")
@@ -40,6 +48,12 @@ def add_rule(args: argparse.Namespace) -> dict:
     path = Path(args.store)
     data = load_store(path)
     rules = data["rules"]
+
+    new_key = (normalize(args.scope), normalize(args.rule), normalize(args.applies_to))
+    for rule in active_rules(data):
+        existing_key = (normalize(rule.get("scope")), normalize(rule.get("rule")), normalize(rule.get("applies_to")))
+        if existing_key == new_key and rule.get("id") != args.supersedes:
+            raise ValueError(f"Duplicate active rule: {rule.get('id')}")
 
     if args.supersedes:
         matched = [rule for rule in rules if rule.get("id") == args.supersedes]
@@ -65,6 +79,11 @@ def add_rule(args: argparse.Namespace) -> dict:
     return rule
 
 
+def list_active(args: argparse.Namespace) -> dict:
+    data = load_store(Path(args.store))
+    return {"rules": active_rules(data)}
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Record auditable ppt-page-image corrections.")
     subparsers = parser.add_subparsers(dest="command", required=True)
@@ -76,6 +95,8 @@ def build_parser() -> argparse.ArgumentParser:
     add.add_argument("--applies-to", required=True)
     add.add_argument("--avoid")
     add.add_argument("--supersedes")
+    list_parser = subparsers.add_parser("list-active", help="Print active correction rules")
+    list_parser.add_argument("--store", required=True)
     return parser
 
 
@@ -85,6 +106,8 @@ def main() -> int:
     try:
         if args.command == "add":
             result = add_rule(args)
+        elif args.command == "list-active":
+            result = list_active(args)
         else:
             parser.error("Unsupported command")
     except (OSError, ValueError, json.JSONDecodeError) as exc:

@@ -17,8 +17,11 @@ class DeliveryContractTests(unittest.TestCase):
         document.new_page(width=1600, height=900)
         document.save(root / "示例课件.pdf")
         (root / "PPT内容大纲.txt").write_text("第01页：封面", encoding="utf-8")
-        (root / "风格提示词.txt").write_text("整页图片，图文分区", encoding="utf-8")
-        (root / "字体说明.txt").write_text("标题：示例字体", encoding="utf-8")
+        style_text = "整页图片，图文分区"
+        if include_images:
+            style_text += "\n素材登记：slide-01.png 用于第01页参考"
+        (root / "风格提示词.txt").write_text(style_text, encoding="utf-8")
+        (root / "字体说明.txt").write_text("标题：示例字体\n打包文件：example.ttf", encoding="utf-8")
         fonts = root / "fonts"
         fonts.mkdir()
         (fonts / "example.ttf").write_bytes(b"font-data")
@@ -27,7 +30,7 @@ class DeliveryContractTests(unittest.TestCase):
             images.mkdir()
             (images / "slide-01.png").write_bytes(b"image-data")
 
-    def validate(self, root: Path) -> subprocess.CompletedProcess[str]:
+    def validate(self, root: Path, *extra: str) -> subprocess.CompletedProcess[str]:
         return subprocess.run(
             [
                 sys.executable,
@@ -36,6 +39,7 @@ class DeliveryContractTests(unittest.TestCase):
                 str(root),
                 "--deck-name",
                 "示例课件",
+                *extra,
             ],
             capture_output=True,
             text=True,
@@ -74,6 +78,50 @@ class DeliveryContractTests(unittest.TestCase):
             result = self.validate(root)
             self.assertNotEqual(result.returncode, 0)
             self.assertIn("font", result.stderr.lower())
+
+    def test_rejects_expected_page_count_mismatch(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            self.make_delivery(root)
+            result = self.validate(root, "--expected-pages", "2")
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("page count", result.stderr.lower())
+
+    def test_rejects_process_artifacts_in_delivery(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            self.make_delivery(root)
+            (root / ".work").mkdir()
+            result = self.validate(root)
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("unexpected", result.stderr.lower())
+
+    def test_rejects_old_version_files_in_delivery(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            self.make_delivery(root)
+            (root / "示例课件_v2.pdf").write_bytes(b"old")
+            result = self.validate(root)
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("old or process", result.stderr.lower())
+
+    def test_rejects_unregistered_font_file(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            self.make_delivery(root)
+            (root / "字体说明.txt").write_text("标题：示例字体", encoding="utf-8")
+            result = self.validate(root)
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("not registered", result.stderr.lower())
+
+    def test_rejects_unregistered_image_asset(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            self.make_delivery(root, include_images=True)
+            (root / "风格提示词.txt").write_text("整页图片，图文分区", encoding="utf-8")
+            result = self.validate(root)
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("not registered", result.stderr.lower())
 
 
 if __name__ == "__main__":

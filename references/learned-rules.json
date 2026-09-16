@@ -77,6 +77,105 @@
       "avoid": "Treating anti-AI quality as a final review item only",
       "supersedes": null,
       "status": "active"
+    },
+    {
+      "id": "correction-0008",
+      "created_at": "2026-09-15T02:00:42.979547+00:00",
+      "scope": "global",
+      "source": "你要站在一个观看的人的视角来看，就不可能所有都是左右排版结构；而且第一张，明显要凸显主题，显然旁边的区域太大就会抢了主题；我希望skill有自我迭代功能，越用越聪明",
+      "rule": "From the viewer perspective, audit visual hierarchy and deck rhythm before generation and at review gates: the main theme or teaching point must dominate the page, supporting illustration areas must not compete with or steal attention from the title/key message, and a deck must not default to repeated left-text/right-image layouts unless the content structure genuinely requires that family.",
+      "applies_to": "style selection, planning package, page prompts, first-five review, whole-deck QA, and future ppt-page-image projects",
+      "avoid": "mechanically using text area plus side illustration; allowing a style sample composition to overpower the topic; approving pages only because each page is individually readable while the deck feels monotonous or visually misprioritized",
+      "supersedes": null,
+      "status": "active"
+    },
+    {
+      "id": "correction-0009",
+      "created_at": "2026-09-15T11:16:21.174120+00:00",
+      "scope": "global",
+      "source": "同一种模板的内容尽可能模板形式一样，不要太多元化显得杂乱；结构差不多的环节页标题形式、标题大小和排版要相近；练习题如果涉及答案，直接把答案放在括号里面，判断题也把勾叉放在括号里面。",
+      "rule": "For pages that belong to the same exercise set, teaching segment family, or repeated content structure, keep a consistent template family: title treatment, title size, border/frame style, spacing rhythm, and answer placement should match unless the content structure requires a deliberate exception. For exercises with answers, put the answer directly in the question blank or parentheses, including check/cross marks for true-false items, instead of separating answers into a detached answer strip when the question format can hold the answer.",
+      "applies_to": "all future ppt-page-image projects with repeated sections, exercise pages, same-link pages, worksheets, or answer pages",
+      "avoid": "over-diversifying similar pages; changing title styles across same-structure pages; using separate answer bars for exercises where answers belong in blanks or parentheses",
+      "supersedes": null,
+      "status": "active"
+    },
+    {
+      "id": "correction-0010",
+      "created_at": "2026-09-15T11:21:17.992983+00:00",
+      "scope": "global",
+      "source": "统编版2026年道德与法治六年级可以放在一旁，可以参考这张图封面图的调整。前面两个PPT都有这个问题",
+      "rule": "封面页的教材版本、年份、册别等元信息应退为顶部小字或侧边辅助信息，单元信息可做小型色标，课题编号、课题名和副标题必须成为第一视觉层级。",
+      "applies_to": "cover slides",
+      "avoid": "让“统编版2026年道德与法治六年级上册”等元信息占据主标题层级或压过课题名",
+      "supersedes": null,
+      "status": "active"
+    },
+    {
+      "id": "correction-0011",
+      "created_at": "2026-09-15T12:35:57.461233+00:00",
+      "scope": "global",
+      "source": "同级教学环节页（环节一、环节二、环节三）标题设计排版需要统一；但内容区可以根据导入、辨析、主题提问等教学动作变化，不要机械套同一整页模板。",
+      "rule": "For same-level teaching section or chapter-navigation pages, keep a unified title component and hierarchy: section label style, main title scale, placement, decorative rules, and title-to-content spacing should read as one system. The content area may vary by teaching action, such as concept introduction, misconception diagnosis, discussion prompt, or summary, and should not be forced into one identical full-page template.",
+      "applies_to": "all future ppt-page-image projects with teaching sections, chapter markers, lesson segments, or repeated navigation pages",
+      "avoid": "making section pages look like unrelated templates; or over-correcting by forcing all same-level section pages to share the same full-page content layout",
+      "supersedes": null,
+      "status": "active"
+    },
+    {
+      "id": "correction-0012",
+      "created_at": "2026-09-15T12:43:35.859213+00:00",
+      "scope": "global",
+      "source": "像课堂练习中选择题和判断题这两个是属于同一个板块的，它的一个标题的设计为什么要如此不同呢？像这种同种成绩的，可以用同一种模板就可以了。还有和下面的情景题也区别有点大。",
+      "rule": "同一课堂练习、测评、巩固训练板块中的选择题、判断题、情境题、填空题等同级题型页必须共用同一模板家族：主标题组件、标题位置、标题尺度、分隔线、边框/底板语言、页内留白和题目排布节奏保持一致；题型差异只体现在副标题、题目数量、答案解析区和必要图示上。",
+      "applies_to": "exercise, quiz, assessment, and scenario-question pages in future ppt-page-image projects",
+      "avoid": "把选择题、判断题、情境题设计成彼此不相关的标题体系或视觉模板",
+      "supersedes": null,
+      "status": "active"
+    },
+    {
+      "id": "correction-0013",
+      "created_at": "2026-09-15T12:55:50.785228+00:00",
+      "scope": "global",
+      "source": "这几张的风格和排版怎么都不一样啊，要尽可能相像，它属于同一个板块。",
+      "rule": "同一板块连续页面必须先选定一张母版并锁定具体版式不变量，再批量生成同族页面；不变量包括背景空间、标题组件、题型副标题位置、主阅读纸张/底板、分隔线、装饰物类型与位置、留白比例、答案区样式。除题目文字、题型标签和必要内容长度外，不得引入新的场景、摄影人物、标题牌或大幅构图变化。",
+      "applies_to": "same-block pages, especially classroom exercise and assessment page groups",
+      "avoid": "同一板块内一页是简洁纸面模板，另一页变成照片场景、展柜大牌、社区活动图或不同标题系统",
+      "supersedes": null,
+      "status": "active"
+    },
+    {
+      "id": "correction-0014",
+      "created_at": "2026-09-15T13:23:08.116498+00:00",
+      "scope": "global",
+      "source": "用户指出同一课堂练习板块的多页风格和排版仍不一致，要求尽可能相像。实际修复时需将截图页扩展为完整相关页组，选一张母版后批量统一，并用拼图回看。",
+      "rule": "当用户反馈同一板块、同一题组或同一环节的页面不统一时，受影响范围应扩展到该板块的完整连续页组，必要时包括同项目中相同课型的对应页；先选定一张母版，锁定标题、版心、分隔线、装饰、留白和答案区等不变量，再整页再生全部受影响页面，并用并排拼图或回渲染拼图做家族一致性复核。",
+      "applies_to": "future ppt-page-image correction workflows for repeated blocks, exercise sets, assessment sets, and same-level lesson segments",
+      "avoid": "只修用户截图中的单页；分批生成导致同一组页面再次漂移；没有把修复后页面并排比较就交付",
+      "supersedes": null,
+      "status": "active"
+    },
+    {
+      "id": "correction-0015",
+      "created_at": "2026-09-15T15:27:26.717064+00:00",
+      "scope": "global",
+      "source": "提示词中所用到的字体风格最好和图片制作的也要对应上，因为后面这些图片要转可编辑，然后进行修复的。如果太过于花里胡哨的字体的话，可能会比较难匹配。所以一个PPT最多就用三到五种字体就可以了，不要太多太杂。",
+      "rule": "For image-based PPTs that may later be converted to editable slides, keep typography repairable: define 3-5 font roles at most in 字体说明.txt, use the same role wording consistently in page prompts, and choose font styles that correspond to packaged local fonts or realistic editable substitutes.",
+      "applies_to": "all future ppt-page-image projects, especially decks intended for editable conversion or repair",
+      "avoid": "using many unrelated decorative, calligraphic, handwritten, highly stylized, or hard-to-match font styles in generated images; describing typography in prompts in ways that do not correspond to the packaged repair fonts",
+      "supersedes": null,
+      "status": "superseded"
+    },
+    {
+      "id": "correction-0016",
+      "created_at": "2026-09-15T16:27:04.567512+00:00",
+      "scope": "global",
+      "source": "这次限制得太绝对了，就是为了排版好看的话，也是可以适当地使用一些字体，不是一概地限制。可以用7个以内的字体角色",
+      "rule": "For image-based PPTs that may later be converted to editable slides, keep typography repairable but not overly rigid: define no more than 7 font roles in 字体说明.txt, use role wording consistently in page prompts, and allow extra title, emphasis, or decorative roles when they materially improve hierarchy or layout, as long as each role has a realistic packaged local font or editable substitute.",
+      "applies_to": "all future ppt-page-image projects, especially decks intended for editable conversion or repair",
+      "avoid": "strictly limiting every deck to 3-5 roles when a tasteful additional role would improve hierarchy; using untracked decorative/calligraphic/handwritten styles that lack editable substitutes; letting font roles proliferate beyond 7",
+      "supersedes": "correction-0015",
+      "status": "active"
     }
   ]
 }
