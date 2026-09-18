@@ -6,6 +6,7 @@ import re
 import sys
 from pathlib import Path
 
+import pymupdf
 from PIL import Image
 
 
@@ -85,18 +86,31 @@ def validate_images(files: list[Path], expected_pages: int | None) -> tuple[int,
 def package(files: list[Path], output: Path, quality: int, expected_pages: int | None, mode: str) -> None:
     validate_images(files, expected_pages)
     output.parent.mkdir(parents=True, exist_ok=True)
+    for path in files:
+        print(path.name)
+
+    if mode == "lossless":
+        document = pymupdf.open()
+        try:
+            for path in files:
+                page = document.new_page(width=960, height=540)
+                page.insert_image(page.rect, filename=str(path), keep_proportion=False)
+            document.save(output, deflate=True)
+        finally:
+            document.close()
+        return
+
     pages = []
     try:
         for path in files:
             with Image.open(path) as image:
                 pages.append(image.convert("RGB"))
-            print(path.name)
         pages[0].save(
             output,
             format="PDF",
             save_all=True,
             append_images=pages[1:],
-            quality=100 if mode == "lossless" else quality,
+            quality=quality,
             subsampling=0,
             resolution=150.0,
         )

@@ -176,6 +176,17 @@
       "avoid": "strictly limiting every deck to 3-5 roles when a tasteful additional role would improve hierarchy; using untracked decorative/calligraphic/handwritten styles that lack editable substitutes; letting font roles proliferate beyond 7",
       "supersedes": "correction-0015",
       "status": "active"
+    },
+    {
+      "id": "correction-0017",
+      "created_at": "2026-09-18T13:55:15.150263+00:00",
+      "scope": "global",
+      "source": "如果识别是教材课件或者主题班课类的话，一方面如果有相关热点素材匹配教学内容的话可以引入，另外一个方面如果有些内容可以用真实的图片的话，可以用真实的图片汇入，会更加真实",
+      "rule": "For textbook lessons and themed class-meeting presentations, evaluate content enrichment before page planning: introduce current or recent real-world cases when they directly support the teaching goal, and use suitable authentic photographs as full-page generation inputs when they improve credibility and comprehension.",
+      "applies_to": "intake, research, asset planning, prompts, generation, and QA for textbook and themed class-meeting decks",
+      "avoid": "adding loosely related trends, unverified claims, misleading documentary imagery, unlicensed assets, or decorative stock photos that do not support the lesson",
+      "supersedes": null,
+      "status": "active"
     }
   ]
 }
