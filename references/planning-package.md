@@ -7,9 +7,10 @@ Create this package after style selection and before final-page generation. It i
 1. Finalize the ordered page list and lock exact visible copy.
 2. Record the selected style, the user's feedback, useful traits, and rejected traits.
 3. Inspect available local fonts and choose repairable font roles.
-4. Define each repeated family's component specifications, then write and cross-check the three planning files and `.work/project-state.json`.
-5. Package selected fonts and any useful retained images.
-6. Run `scripts/validate_project.py`. A passing result is the planning hard gate; no pilot or final-page generation may start before it passes.
+4. Define each repeated family's component specifications in the schema-v2 workspace `project-state.json`.
+5. Package selected fonts in workspace `fonts/` and register any useful retained images.
+6. Generate the three planning files into workspace `planning/` with `python -X utf8 scripts/generate_planning_files.py --state <workspace>/project-state.json --out-dir <workspace>/planning`.
+7. Run `python -X utf8 scripts/validate_project.py --state <workspace>/project-state.json --workspace <workspace> --gate planning`. A passing result is the planning hard gate; no pilot or final-page generation may start before it passes.
 
 ## Component Specifications
 
@@ -89,6 +90,6 @@ When an authentic photograph is used in generation, retain it in `images/` when 
 
 ## Planning Hard Gate
 
-Before pilot generation, after every accepted correction, and before full production, verify that page count, page titles, exact copy, style choices, family membership, component specifications, font-role tokens, packaged font files, asset names, and per-page prompts agree across all three files and project state. Run `scripts/validate_project.py`; a failure blocks generation.
+Before pilot generation, after every accepted correction, and before full production, regenerate the three planning files. The planning gate compares them exactly with deterministic output from project state and verifies page count, page titles, exact copy, family membership, component specifications, font-role tokens, packaged fonts, and per-page prompts. A failure blocks generation.
 
-`PPT内容大纲.txt` is the human-readable authority for page order, page count, exact audience-facing copy, and page families. `风格提示词.txt` and `字体说明.txt` must derive from it. Mirror those invariants in `.work/project-state.json` using [project state](project-state.md), run `scripts/validate_project.py`, and do not deliver the state file.
+Schema-v2 `project-state.json` is the only editable planning authority. `PPT内容大纲.txt`, `风格提示词.txt`, and `字体说明.txt` are generated human-readable deliverables. Do not edit them directly and do not deliver the state file.
