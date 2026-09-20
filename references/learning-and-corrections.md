@@ -23,14 +23,14 @@ Infer conservatively. An explicit page number such as “第7页” is page scop
 7. inspect accepted family pages for the same issue;
 8. keep unrelated approved pages unchanged.
 
-Global rules live in `references/learned-rules.json`. Project rules live in temporary project storage and are not delivered. Read active global rules at the beginning of every task.
+Global user rules live in `%CODEX_HOME%/state/ppt-page-image/learned-rules.json`, or `%USERPROFILE%/.codex/state/ppt-page-image/learned-rules.json` when `CODEX_HOME` is unset. Project rules live in temporary project storage and are not delivered. `references/learned-rules.json` preserves promoted and superseded history inside the Skill and is not the mutable store. Read active global rules at the beginning of every task.
 
-Use `scripts/record_correction.py list-active --store references/learned-rules.json` to inspect active rules. Superseded rules remain in history but must not enter ordinary prompts.
+Use `python -X utf8 scripts/record_correction.py list-active` to inspect active rules. Promoted and superseded rules remain in history but must not enter ordinary prompts.
 
 Example:
 
 ```powershell
-python scripts/record_correction.py add --store references/learned-rules.json --scope global --source "以后正文不要使用复杂场景压字" --rule "正文使用独立浅色阅读区" --applies-to "body pages" --avoid "dense copy over scenery"
+python -X utf8 scripts/record_correction.py add --scope global --source "以后正文不要使用复杂场景压字" --rule "正文使用独立浅色阅读区" --applies-to "body pages" --avoid "dense copy over scenery"
 ```
 
 ## Supersession And Conflicts

@@ -21,7 +21,8 @@
       "applies_to": "all future ppt-page-image projects",
       "avoid": "forcing layout variation or full-page regeneration merely because a composition repeats",
       "supersedes": "correction-0001",
-      "status": "active"
+      "status": "promoted",
+      "promoted_to": "SKILL.md#Page-Families"
     },
     {
       "id": "correction-0003",
@@ -32,7 +33,8 @@
       "applies_to": "planning, prompts, generation, QA, and final delivery",
       "avoid": "Treating font notes as post-production documentation or omitting the prompt-outline stage and font files",
       "supersedes": null,
-      "status": "active"
+      "status": "promoted",
+      "promoted_to": "references/planning-package.md"
     },
     {
       "id": "correction-0004",
@@ -43,7 +45,8 @@
       "applies_to": "style prompts, page prompts, image generation, and visual QA",
       "avoid": "Embedding audience-facing copy or decorative pseudo-text inside illustrations",
       "supersedes": null,
-      "status": "active"
+      "status": "promoted",
+      "promoted_to": "references/style-and-prompts.md#Text-And-Readability"
     },
     {
       "id": "correction-0005",
@@ -54,7 +57,8 @@
       "applies_to": "covers, section pages, title-heavy pages, prompts, generation, and visual QA",
       "avoid": "Placing prominent titles over busy or text-like backgrounds",
       "supersedes": null,
-      "status": "active"
+      "status": "promoted",
+      "promoted_to": "references/style-and-prompts.md#Text-And-Readability"
     },
     {
       "id": "correction-0006",
@@ -65,7 +69,8 @@
       "applies_to": "style gate, planning, prompt outline, and generation order",
       "avoid": "Offering generic styles, treating the chosen composition as a template, or starting final images before prompt planning",
       "supersedes": null,
-      "status": "active"
+      "status": "promoted",
+      "promoted_to": "references/style-and-prompts.md#Four-Style-Gate"
     },
     {
       "id": "correction-0007",
@@ -76,7 +81,8 @@
       "applies_to": "style samples, planning package, global prompts, page prompts, pre-generation gate, production, and QA",
       "avoid": "Treating anti-AI quality as a final review item only",
       "supersedes": null,
-      "status": "active"
+      "status": "promoted",
+      "promoted_to": "references/style-and-prompts.md#Anti-Generic-Design-Recipe"
     },
     {
       "id": "correction-0008",
@@ -87,7 +93,8 @@
       "applies_to": "style selection, planning package, page prompts, first-five review, whole-deck QA, and future ppt-page-image projects",
       "avoid": "mechanically using text area plus side illustration; allowing a style sample composition to overpower the topic; approving pages only because each page is individually readable while the deck feels monotonous or visually misprioritized",
       "supersedes": null,
-      "status": "active"
+      "status": "promoted",
+      "promoted_to": "references/style-and-prompts.md#Viewer-Perspective-Gate"
     },
     {
       "id": "correction-0009",
@@ -98,7 +105,8 @@
       "applies_to": "all future ppt-page-image projects with repeated sections, exercise pages, same-link pages, worksheets, or answer pages",
       "avoid": "over-diversifying similar pages; changing title styles across same-structure pages; using separate answer bars for exercises where answers belong in blanks or parentheses",
       "supersedes": null,
-      "status": "active"
+      "status": "promoted",
+      "promoted_to": "SKILL.md#Page-Families"
     },
     {
       "id": "correction-0010",
@@ -109,7 +117,8 @@
       "applies_to": "cover slides",
       "avoid": "让“统编版2026年道德与法治六年级上册”等元信息占据主标题层级或压过课题名",
       "supersedes": null,
-      "status": "active"
+      "status": "promoted",
+      "promoted_to": "references/planning-package.md#PPT内容大纲.txt"
     },
     {
       "id": "correction-0011",
@@ -120,7 +129,8 @@
       "applies_to": "all future ppt-page-image projects with teaching sections, chapter markers, lesson segments, or repeated navigation pages",
       "avoid": "making section pages look like unrelated templates; or over-correcting by forcing all same-level section pages to share the same full-page content layout",
       "supersedes": null,
-      "status": "active"
+      "status": "promoted",
+      "promoted_to": "SKILL.md#Page-Families"
     },
     {
       "id": "correction-0012",
@@ -131,7 +141,8 @@
       "applies_to": "exercise, quiz, assessment, and scenario-question pages in future ppt-page-image projects",
       "avoid": "把选择题、判断题、情境题设计成彼此不相关的标题体系或视觉模板",
       "supersedes": null,
-      "status": "active"
+      "status": "promoted",
+      "promoted_to": "references/planning-package.md#Component-Specifications"
     },
     {
       "id": "correction-0013",
@@ -142,7 +153,8 @@
       "applies_to": "same-block pages, especially classroom exercise and assessment page groups",
       "avoid": "同一板块内一页是简洁纸面模板，另一页变成照片场景、展柜大牌、社区活动图或不同标题系统",
       "supersedes": null,
-      "status": "active"
+      "status": "promoted",
+      "promoted_to": "references/full-page-production.md#Family-Montage-Gate"
     },
     {
       "id": "correction-0014",
@@ -153,7 +165,8 @@
       "applies_to": "future ppt-page-image correction workflows for repeated blocks, exercise sets, assessment sets, and same-level lesson segments",
       "avoid": "只修用户截图中的单页；分批生成导致同一组页面再次漂移；没有把修复后页面并排比较就交付",
       "supersedes": null,
-      "status": "active"
+      "status": "promoted",
+      "promoted_to": "references/qa-and-delivery.md#Family-And-Whole-Deck-QA"
     },
     {
       "id": "correction-0015",
@@ -175,7 +188,8 @@
       "applies_to": "all future ppt-page-image projects, especially decks intended for editable conversion or repair",
       "avoid": "strictly limiting every deck to 3-5 roles when a tasteful additional role would improve hierarchy; using untracked decorative/calligraphic/handwritten styles that lack editable substitutes; letting font roles proliferate beyond 7",
       "supersedes": "correction-0015",
-      "status": "active"
+      "status": "promoted",
+      "promoted_to": "references/planning-package.md#字体说明.txt"
     },
     {
       "id": "correction-0017",
@@ -186,7 +200,8 @@
       "applies_to": "intake, research, asset planning, prompts, generation, and QA for textbook and themed class-meeting decks",
       "avoid": "adding loosely related trends, unverified claims, misleading documentary imagery, unlicensed assets, or decorative stock photos that do not support the lesson",
       "supersedes": null,
-      "status": "active"
+      "status": "promoted",
+      "promoted_to": "references/intake-and-planning.md#Teaching-Enrichment-Gate"
     }
   ]
 }

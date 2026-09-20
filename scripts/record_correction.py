@@ -34,6 +34,12 @@ def active_rules(data: dict) -> list[dict]:
     return [rule for rule in data["rules"] if rule.get("status") == "active"]
 
 
+def default_store() -> Path:
+    codex_home = os.environ.get("CODEX_HOME")
+    base = Path(codex_home) if codex_home else Path.home() / ".codex"
+    return base / "state" / "ppt-page-image" / "learned-rules.json"
+
+
 def atomic_write(path: Path, data: dict) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_name(f"{path.name}.tmp")
@@ -88,7 +94,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Record auditable ppt-page-image corrections.")
     subparsers = parser.add_subparsers(dest="command", required=True)
     add = subparsers.add_parser("add", help="Append one correction rule")
-    add.add_argument("--store", required=True)
+    add.add_argument("--store", default=str(default_store()))
     add.add_argument("--scope", choices=("page", "project", "global"), required=True)
     add.add_argument("--source", required=True)
     add.add_argument("--rule", required=True)
@@ -96,7 +102,7 @@ def build_parser() -> argparse.ArgumentParser:
     add.add_argument("--avoid")
     add.add_argument("--supersedes")
     list_parser = subparsers.add_parser("list-active", help="Print active correction rules")
-    list_parser.add_argument("--store", required=True)
+    list_parser.add_argument("--store", default=str(default_store()))
     return parser
 
 
