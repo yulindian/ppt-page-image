@@ -1,0 +1,94 @@
+{
+  "schema_version": 2,
+  "deck": {
+    "name": "课件",
+    "expected_pages": 1,
+    "audience": "中小学生",
+    "scenario": "主题班会",
+    "language": "简体中文",
+    "source_authority": "用户提供材料",
+    "content_scope": "班级凝聚力",
+    "assumptions": []
+  },
+  "status": "PLANNING_READY",
+  "style": {
+    "summary": "温暖、克制的课堂绘本风",
+    "user_feedback": "主题突出，避免模板化左右排版",
+    "useful_traits": ["暖色纸张质感", "清晰阅读区"],
+    "rejected_traits": ["霓虹渐变", "悬浮卡片"],
+    "fingerprint": "暖橙与深蓝，手绘课堂人物，留白充足",
+    "palette_roles": {"background": "暖米白", "primary": "深蓝", "accent": "暖橙"},
+    "material": "轻纸张纹理",
+    "image_treatment": "自然手绘",
+    "whitespace": "充足",
+    "decoration_density": "低",
+    "permitted_variation": ["内容区构图随教学动作变化"],
+    "typography_direction": "清晰、宽松、易于后续编辑修复",
+    "global_prompt": "制作完整16:9课堂演示页面，保持温暖、克制、清晰。",
+    "global_negatives": ["水印", "二维码", "伪文字"]
+  },
+  "fonts": [
+    {
+      "role": "F01",
+      "display_name": "Noto Sans SC",
+      "weight": "Regular",
+      "source_path": "C:/Windows/Fonts/NotoSansSC-Regular.otf",
+      "packaged_filename": "NotoSansSC-Regular.otf",
+      "fallback": "Microsoft YaHei",
+      "visual_traits": "清晰无衬线、笔画稳定、字面开阔",
+      "license_status": "redistributable"
+    }
+  ],
+  "enrichment": [],
+  "families": {
+    "cover": {
+      "mother_page": 1,
+      "pages": [1],
+      "invariants": ["主题为第一视觉层级"]
+    }
+  },
+  "pages": [
+    {
+      "index": 1,
+      "type": "封面",
+      "goal": "建立班会主题",
+      "title": "让班级升温",
+      "visible_copy": ["让班级升温"],
+      "required_facts": [],
+      "source_notes": ["用户提供主题"],
+      "content_evidence": ["教室", "围成一圈的学生", "互相倾听"],
+      "design_rationale": "让主题居中占据第一视觉层级，人物只提供温暖氛围。",
+      "element_budget": {
+        "focal": "主标题",
+        "supporting": ["学生围坐插画"],
+        "decoration_limit": "不超过两处低对比装饰"
+      },
+      "family": "cover",
+      "reading_order": ["主标题", "课堂人物"],
+      "density_risk": "low",
+      "zones": {
+        "title": "画面中央安静区域",
+        "reading": "中央标题区",
+        "illustration": "下方无文字区域",
+        "decoration": "四角低对比区域"
+      },
+      "visual_subject": "学生在教室中围坐交流",
+      "image_text_relationship": "人物烘托主题但不争夺注意力",
+      "font_roles": ["F01"],
+      "negative_constraints": ["不要文字压在人物上", "不要额外标语"],
+      "prompt": "第1页，使用字体角色F01。精确呈现：让班级升温。主标题第一视觉层级，人物第二视觉层级。完整生成一张边到边16:9演示页面图像。",
+      "qa_status": "PENDING",
+      "defects": []
+    }
+  ],
+  "reviews": {
+    "pilot": {"status": "pending", "pages": []},
+    "families": {},
+    "deck": {"status": "pending"},
+    "render": {"status": "pending"}
+  },
+  "delivery": {
+    "deck_name": "课件",
+    "images": []
+  }
+}
