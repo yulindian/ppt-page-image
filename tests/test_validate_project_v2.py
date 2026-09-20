@@ -67,6 +67,12 @@ class ProjectStateV2Tests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "at least one font role"):
             MODULE.validate_v2(self.state_path, self.workspace, "planning")
 
+    def test_rejects_unknown_page_family_as_validation_error(self) -> None:
+        self.state["pages"][0]["family"] = "missing-family"
+        self.save_state()
+        with self.assertRaisesRegex(ValueError, "unknown family"):
+            MODULE.validate_v2(self.state_path, self.workspace, "planning")
+
     def test_rejects_locked_copy_missing_from_prompt(self) -> None:
         self.state["pages"][0]["prompt"] = self.state["pages"][0]["prompt"].replace("让班级升温", "班会主题")
         self.save_state()
@@ -79,6 +85,20 @@ class ProjectStateV2Tests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "missing font role"):
             MODULE.validate_v2(self.state_path, self.workspace, "planning")
 
+    def test_rejects_accepted_enrichment_without_source_and_rights(self) -> None:
+        self.state["enrichment"] = [
+            {
+                "type": "authentic_photo",
+                "status": "accepted",
+                "teaching_purpose": "呈现真实协作",
+                "target_pages": [1],
+                "fidelity_constraints": ["不得改变事实关系"],
+            }
+        ]
+        self.save_state()
+        with self.assertRaisesRegex(ValueError, "lacks: source, verified_date, rights_status"):
+            MODULE.validate_v2(self.state_path, self.workspace, "planning")
+
     def test_planning_gate_requires_planning_ready_status(self) -> None:
         self.state["status"] = "INTAKE"
         self.save_state()
@@ -89,6 +109,13 @@ class ProjectStateV2Tests(unittest.TestCase):
         self.state["status"] = "PILOT_APPROVED"
         self.save_state()
         with self.assertRaisesRegex(ValueError, "pilot review evidence"):
+            MODULE.validate_v2(self.state_path, self.workspace, "pilot")
+
+    def test_pilot_gate_rejects_nonexistent_page_number(self) -> None:
+        self.state["status"] = "PILOT_APPROVED"
+        self.state["reviews"]["pilot"] = {"status": "pass", "pages": [99], "reviewed_pages": [99]}
+        self.save_state()
+        with self.assertRaisesRegex(ValueError, "invalid page"):
             MODULE.validate_v2(self.state_path, self.workspace, "pilot")
 
     def test_production_gate_requires_current_image_for_every_page(self) -> None:

@@ -201,6 +201,8 @@ def validate_v2_structure(data: dict, workspace: Path) -> tuple[list[dict], dict
         index = page["index"]
         for key in required_page_text:
             require_text(page, key, f"page {index}")
+        if page["family"] not in families:
+            raise ValueError(f"Page {index} uses unknown family: {page['family']}")
         if index not in families[page["family"]].get("pages", []):
             raise ValueError(f"Page {index} has inconsistent family assignment: {page['family']}")
         visible_copy = page.get("visible_copy")
@@ -231,8 +233,28 @@ def validate_v2_structure(data: dict, workspace: Path) -> tuple[list[dict], dict
         if not isinstance(page.get("defects"), list):
             raise ValueError(f"Page {index}.defects must be a list")
 
-    if not isinstance(data.get("enrichment"), list):
+    enrichment = data.get("enrichment")
+    if not isinstance(enrichment, list):
         raise ValueError("enrichment must be a list")
+    for item_index, item in enumerate(enrichment, start=1):
+        if not isinstance(item, dict):
+            raise ValueError(f"Enrichment item {item_index} must be an object")
+        status = item.get("status")
+        if status not in {"accepted", "rejected"}:
+            raise ValueError(f"Enrichment item {item_index} has invalid status: {status}")
+        if status == "rejected":
+            if not isinstance(item.get("rejection_reason"), str) or not item["rejection_reason"].strip():
+                raise ValueError(f"Rejected enrichment item {item_index} lacks rejection_reason")
+            continue
+        required = ("type", "teaching_purpose", "source", "verified_date", "rights_status", "target_pages")
+        missing = [field for field in required if not item.get(field)]
+        if missing:
+            raise ValueError(f"Accepted enrichment item {item_index} lacks: {', '.join(missing)}")
+        targets = item["target_pages"]
+        if not isinstance(targets, list) or not targets or any(page not in indices for page in targets):
+            raise ValueError(f"Enrichment item {item_index} has invalid target_pages")
+        if item.get("type") == "authentic_photo" and not item.get("fidelity_constraints"):
+            raise ValueError(f"Authentic photo item {item_index} lacks fidelity_constraints")
     if not isinstance(data.get("reviews"), dict):
         raise ValueError("reviews must be an object")
     delivery = data.get("delivery")
@@ -253,12 +275,16 @@ def validate_gate_status(data: dict, gate: str) -> None:
         raise ValueError(f"{gate} gate requires status {required} or later; found {status}")
 
 
-def validate_pilot_evidence(data: dict) -> None:
+def validate_pilot_evidence(data: dict, project_pages: list[dict]) -> None:
     review = (data.get("reviews") or {}).get("pilot") or {}
     pages = review.get("pages")
     reviewed = review.get("reviewed_pages")
     if review.get("status") != "pass" or not isinstance(pages, list) or not pages or sorted(pages) != sorted(reviewed or []):
         raise ValueError("pilot review evidence must be pass with matching nonempty pages and reviewed_pages")
+    valid_pages = {page["index"] for page in project_pages}
+    invalid = sorted(set(pages) - valid_pages)
+    if invalid:
+        raise ValueError(f"pilot review contains invalid page numbers: {invalid}")
 
 
 def validate_production_evidence(pages: list[dict], workspace: Path) -> None:
@@ -309,7 +335,7 @@ def validate_v2(state_path: Path, workspace: Path, gate: str) -> dict:
     pages, families, font_roles = validate_v2_structure(data, workspace)
     validate_planning_documents(data, workspace)
     if gate in {"pilot", "production", "delivery"}:
-        validate_pilot_evidence(data)
+        validate_pilot_evidence(data, pages)
     if gate in {"production", "delivery"}:
         validate_production_evidence(pages, workspace)
     if gate == "delivery":

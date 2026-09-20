@@ -32,9 +32,9 @@ def _items(values: Any) -> str:
     if not values:
         return "无"
     if isinstance(values, dict):
-        return "；".join(f"{key}：{_text(value)}" for key, value in values.items())
+        return "；".join(f"{key}：{_items(value)}" for key, value in values.items())
     if isinstance(values, list):
-        return "；".join(_text(value) for value in values)
+        return "；".join(_items(value) for value in values)
     return _text(values)
 
 

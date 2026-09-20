@@ -116,6 +116,18 @@ class PromoteDeliveryTests(unittest.TestCase):
         self.assertEqual(unrelated.read_bytes(), b"user-owned")
         self.assertEqual({path.name for path in self.delivery.iterdir()}, {"用户教案.docx"})
 
+    def test_rejects_delivery_directory_inside_workspace(self) -> None:
+        delivery_inside_workspace = self.workspace / "final"
+        with self.assertRaisesRegex(ValueError, "separate"):
+            promote_delivery.promote(
+                self.state_path,
+                self.workspace,
+                self.pdf,
+                delivery_inside_workspace,
+                self.render_report,
+            )
+        self.assertFalse(delivery_inside_workspace.exists())
+
     def test_moves_previous_managed_delivery_to_workspace_history(self) -> None:
         self.promote()
         previous_pdf = (self.delivery / "课件.pdf").read_bytes()

@@ -26,6 +26,17 @@ def _managed_root_names(deck_name: str) -> set[str]:
     return {f"{deck_name}.pdf", *PLANNING_FILES, "fonts", "images"}
 
 
+def _ensure_separate_paths(workspace: Path, delivery_dir: Path) -> None:
+    workspace_root = workspace.resolve()
+    delivery_root = delivery_dir.resolve()
+    if (
+        workspace_root == delivery_root
+        or delivery_root.is_relative_to(workspace_root)
+        or workspace_root.is_relative_to(delivery_root)
+    ):
+        raise ValueError("Workspace and final delivery must be separate, non-nested directories")
+
+
 def _ensure_existing_target_is_managed(delivery_dir: Path, deck_name: str) -> None:
     if not delivery_dir.exists():
         return
@@ -91,6 +102,7 @@ def promote(
     delivery_dir: Path,
     render_report: Path,
 ) -> dict:
+    _ensure_separate_paths(workspace, delivery_dir)
     state = json.loads(state_path.read_text(encoding="utf-8"))
     validate_v2(state_path, workspace, "delivery")
     if not pdf_path.is_file():
