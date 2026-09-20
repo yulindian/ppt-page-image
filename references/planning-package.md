@@ -7,9 +7,22 @@ Create this package after style selection and before final-page generation. It i
 1. Finalize the ordered page list and lock exact visible copy.
 2. Record the selected style, the user's feedback, useful traits, and rejected traits.
 3. Inspect available local fonts and choose repairable font roles.
-4. Write and cross-check the three planning files and `.work/project-state.json`.
+4. Define each repeated family's component specifications, then write and cross-check the three planning files and `.work/project-state.json`.
 5. Package selected fonts and any useful retained images.
-6. Generate pages only after the package is internally consistent.
+6. Run `scripts/validate_project.py`. A passing result is the planning hard gate; no pilot or final-page generation may start before it passes.
+
+## Component Specifications
+
+For every family with two or more pages, define at least one shared component that can be checked visually. Use concrete traits rather than labels such as “统一风格” or “步骤号清晰.” Record the same specifications in `PPT内容大纲.txt`, `风格提示词.txt`, and the family's `component_specifications` in `.work/project-state.json`.
+
+Each component specification includes:
+
+- `name` and `applies_to`: a stable component name and every page in the family;
+- `fixed`: observable position, size or proportion, shape, fill, stroke, typography, alignment, spacing, frame, and answer logic that must remain the same;
+- `variable`: copy, number, illustration, data, or other traits allowed to change;
+- `forbidden`: known drift such as alternate badges, gradients, shadows, color swaps, new frames, or changed title geometry.
+
+Specify only components that genuinely repeat. A single-page family does not need a component specification. When content forces an exception, move the page to a better family or record a deliberate exception before generation; do not silently weaken the family.
 
 ## PPT内容大纲.txt
 
@@ -23,6 +36,7 @@ Start with PPT name, audience, scenario, language, page count, source authority,
 - design rationale: one concise reason why this hierarchy, layout, imagery, and density serve the page's teaching or communication goal;
 - element budget: one focal element, the minimum supporting elements, and the decoration limit;
 - layout family, reading order, and density risk;
+- family component specifications inherited by this page, including fixed, variable, and forbidden traits;
 - separate text, illustration, and decoration zones;
 - visual subject and image-text relationship;
 - authentic-photo asset, fidelity requirement, permitted treatment, and documentary constraints when applicable;
@@ -38,6 +52,7 @@ Include:
 - palette roles, material, image treatment, whitespace, decoration density, and permitted variation;
 - typography direction with explicit references to the roles in `字体说明.txt`;
 - layout families and the rules for reusing them without fixing one composition globally;
+- the exact component specifications for every repeated family;
 - illustration/text separation and the quiet-background rule for prominent titles;
 - asset inventory for every retained item in `images/`, including source, purpose, and page use;
 - for current cases and authentic photos: verification date, source URL or provenance, rights status, teaching rationale, fidelity requirement, and forbidden alterations;
@@ -72,8 +87,8 @@ This folder is optional. Use it only for concrete source images, selected style 
 
 When an authentic photograph is used in generation, retain it in `images/` when rights permit and register its provenance, rights status, teaching purpose, target page, and fidelity constraints. If redistribution is not permitted, do not package the file; record the source and limitation instead.
 
-## Cross-Check
+## Planning Hard Gate
 
-Before generation and after every accepted correction, verify that page count, page titles, exact copy, style choices, font-role tokens, packaged filenames, asset names, and per-page prompts agree across all three files. Update the planning package before regenerating affected pages.
+Before pilot generation, after every accepted correction, and before full production, verify that page count, page titles, exact copy, style choices, family membership, component specifications, font-role tokens, packaged font files, asset names, and per-page prompts agree across all three files and project state. Run `scripts/validate_project.py`; a failure blocks generation.
 
 `PPT内容大纲.txt` is the human-readable authority for page order, page count, exact audience-facing copy, and page families. `风格提示词.txt` and `字体说明.txt` must derive from it. Mirror those invariants in `.work/project-state.json` using [project state](project-state.md), run `scripts/validate_project.py`, and do not deliver the state file.

@@ -35,7 +35,9 @@ Any failure requires complete-page regeneration.
 
 ## Family And Whole-Deck QA
 
-Create both family montages and a whole-deck montage. Check page count and order, focal hierarchy, palette and type-size drift, family consistency, duplication, harmful monotony, generic AI traits, and every user correction.
+Every repeated family must have a current montage containing all its pages in order. Inspect it component by component against the planning specifications: fixed traits must match, differences must appear in the permitted-variable list, and forbidden drift must be absent. A changed family page invalidates the earlier family review and requires a new montage and full-family inspection.
+
+After all families pass, create the whole-deck montage and check page count and order, focal hierarchy, palette and type-size drift, duplication, harmful monotony, generic AI traits, and every user correction. PDF packaging is blocked while any repeated family lacks a current passing montage review.
 
 Repetition is valid when pages share structure and teaching action. It fails when it harms content fit, hierarchy, reading order, or deck rhythm. Variation fails when related pages lose their shared title, frame, spacing, palette, or answer logic. A page that passes alone may still fail its family or the complete sequence.
 
@@ -43,9 +45,9 @@ Repetition is valid when pages share structure and teaching action. It fails whe
 
 Before pilot generation, after accepted corrections, and before delivery:
 
-1. confirm the three planning files are nonempty;
-2. confirm page order, locked copy, prompts, families, and font tokens agree;
-3. run `scripts/validate_project.py`;
+1. confirm the three planning files are complete and nonempty;
+2. confirm page order, locked copy, prompts, families, component specifications, and font tokens agree;
+3. confirm every registered font file exists in `fonts/` and run `scripts/validate_project.py`; any failure blocks generation;
 4. confirm `fonts/` contains every registered, redistributable `.ttf`, `.otf`, or `.ttc` file;
 5. confirm no more than seven font roles are used and each has a realistic repair substitute.
 6. for enrichment assets, confirm relevance, verification date, provenance, rights status, target page, and fidelity constraints are recorded.

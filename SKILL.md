@@ -26,9 +26,9 @@ Create a presentation whose pages are complete 16:9 images and whose final artif
 1. Read all materials and list active rules with `scripts/record_correction.py list-active --store references/learned-rules.json`. Read [intake and planning](references/intake-and-planning.md), assign source roles, resolve conflicts, lock exact copy, and define the ordered page list. For textbook lessons and themed class meetings, also evaluate relevant current cases and authentic-photo opportunities before layout planning.
 2. Read [style and prompts](references/style-and-prompts.md). If no usable style reference or prompt exists, generate four materially different complete-page samples from the same representative content, recommend one, and stop for selection. Skip only when the user explicitly authorizes autonomous style choice.
 3. After selection, record useful traits, rejected traits, and a style fingerprint. Treat composition as an optional layout family, not a deck-wide template.
-4. Read [planning package](references/planning-package.md). Create the three planning files, package fonts, group all pages into layout families, and create `.work/project-state.json` from [project state](references/project-state.md). Run `scripts/validate_project.py` before generating final pages.
-5. Read [full-page production](references/full-page-production.md). Generate and internally review up to five representative high-risk pages: cover, common-family mother page, densest page, special-structure page, and largest repeat-family mother page. Show a montage and stop for approval unless the user waived this gate.
-6. Generate remaining pages. A candidate replaces the current page only after technical, copy, visual, and family checks pass. Keep process output under `.work/`.
+4. Read [planning package](references/planning-package.md). Create the three planning files, package fonts, define page families and their component specifications, and create `.work/project-state.json` from [project state](references/project-state.md). **Planning hard gate:** do not generate pilot or final pages until `scripts/validate_project.py` passes against those completed artifacts.
+5. Read [full-page production](references/full-page-production.md). Generate and review up to five high-risk representatives, including mother pages for repeated families. Show the pilot montage and stop for approval unless the user waived this gate.
+6. Generate remaining pages by family. Before a repeated family can pass, create its family montage and verify every member against the same component specifications. Keep process output under `.work/`.
 7. Read [QA and delivery](references/qa-and-delivery.md). Audit pages, page families, and the whole-deck montage. Package only passing pages into a candidate PDF.
 8. Render the candidate PDF back with `scripts/render_pdf.py`, inspect every rendered page and montage, then record inspection as `pass`. Promote the PDF only after this check.
 9. Run `scripts/validate_delivery.py` with the matching render-back report. Clean process artifacts from the delivery folder and validate again before reporting completion.
@@ -49,9 +49,9 @@ For textbook and themed class-meeting decks, record accepted or rejected enrichm
 
 ## Page Families
 
-Classify at least covers, section dividers, teaching activities, repeated exercises, and repeated case-analysis pages. Each family defines a mother page and shared title component, typography roles, palette roles, frame language, spacing rhythm, and answer or label placement.
+Group pages by shared teaching action and structure. Every repeated family has a mother page plus verifiable component specifications for shared elements such as title bars, labels, frames, worksheets, answer placement, and spacing. Each specification separates fixed traits, permitted variation, and forbidden drift; see [planning package](references/planning-package.md).
 
-Reuse a family when content structure and teaching action match. Change layout when repetition harms hierarchy, reading order, or deck rhythm. Same-level section pages share a title system while their content areas may vary. Same-block exercise pages share one worksheet family; place short answers, checks, and crosses directly in the intended blank or parentheses.
+Reuse the family only while it serves hierarchy and reading order. Content areas may vary, but declared shared components may not. A correction about consistency expands to the full affected family and requires a refreshed family montage.
 
 ## Prompt And Visual Gates
 
@@ -72,7 +72,7 @@ Reject prompts or pages that rely on generic spectacle, template slogans, purpos
 
 Read [learning and corrections](references/learning-and-corrections.md) whenever the user corrects content, style, layout, QA, or delivery. Record persistent rules with `scripts/record_correction.py`, update every affected planning artifact first, then regenerate complete affected pages.
 
-Default correction scope is the named page. Expand to the complete family when the complaint concerns consistency. Keep unrelated approved pages unchanged.
+Default correction scope is the named page. Expand to the complete family when the complaint concerns consistency; update its component specifications and regenerate the family montage before acceptance. Keep unrelated approved pages unchanged.
 
 For every failed generation, record a stable defect code, visible problem, suspected cause, changed planning or prompt condition, and result. Never retry an identical prompt for the same defect. Stop after three failures of the same defect and report permitted content or layout tradeoffs; never switch to compositing as a workaround.
 

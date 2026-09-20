@@ -58,8 +58,11 @@ def validate(state_path: Path, project_dir: Path) -> dict:
     if len(set(font_roles)) != len(font_roles) or any(not role for role in font_roles):
         raise ValueError("Font roles must be nonempty and unique")
     for font in fonts:
-        if not str(font.get("packaged_filename") or "").strip():
+        packaged_filename = str(font.get("packaged_filename") or "").strip()
+        if not packaged_filename:
             raise ValueError(f"Font role lacks packaged_filename: {font.get('role')}")
+        if not (project_dir / "fonts" / packaged_filename).is_file():
+            raise ValueError(f"Packaged font file is missing: {packaged_filename}")
 
     families = data.get("families")
     if not isinstance(families, dict) or not families:
@@ -71,6 +74,23 @@ def validate(state_path: Path, project_dir: Path) -> dict:
             raise ValueError(f"Family {name} must list pages and a mother_page within that list")
         if not family.get("invariants"):
             raise ValueError(f"Family {name} must define at least one invariant")
+        if len(family_pages) > 1:
+            specifications = family.get("component_specifications")
+            if not isinstance(specifications, list) or not specifications:
+                raise ValueError(f"Repeated family {name} must define component_specifications")
+            for spec_index, specification in enumerate(specifications, start=1):
+                if not str(specification.get("name") or "").strip():
+                    raise ValueError(f"Family {name} component specification {spec_index} lacks name")
+                if sorted(specification.get("applies_to") or []) != sorted(family_pages):
+                    raise ValueError(
+                        f"Family {name} component specification {spec_index} applies_to must match family pages"
+                    )
+                for field in ("fixed", "variable", "forbidden"):
+                    value = specification.get(field)
+                    if not isinstance(value, list) or not value:
+                        raise ValueError(
+                            f"Family {name} component specification {spec_index} requires nonempty {field}"
+                        )
         assigned_pages.extend(family_pages)
     if sorted(assigned_pages) != list(range(1, expected_pages + 1)):
         raise ValueError("Every page must belong to exactly one page family")

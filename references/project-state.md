@@ -18,7 +18,16 @@ Create `.work/project-state.json` after style selection and keep it current thro
     "body": {
       "mother_page": 2,
       "pages": [2],
-      "invariants": ["统一标题组件", "独立阅读区"]
+      "invariants": ["统一标题组件", "独立阅读区"],
+      "component_specifications": [
+        {
+          "name": "body_title",
+          "applies_to": [2],
+          "fixed": ["左上定位", "深蓝标题", "统一字号与基线"],
+          "variable": ["标题文案"],
+          "forbidden": ["渐变", "阴影", "另加编号徽章"]
+        }
+      ]
     }
   },
   "fonts": [
@@ -56,10 +65,11 @@ Create `.work/project-state.json` after style selection and keep it current thro
 - `expected_pages` equals the length of `pages`; indices are continuous from 1.
 - Every page belongs to exactly one family.
 - Every family names a mother page within its page list and at least one invariant.
+- Every family with two or more pages defines `component_specifications`. Each specification has a stable `name`, `applies_to` covering every family page, and nonempty `fixed`, `variable`, and `forbidden` lists. Single-page families are exempt.
 - `visible_copy` contains every locked audience-facing string; every item must appear verbatim in that page's prompt.
 - Use no more than seven font roles. Each page references only declared roles, and every role names its packaged font file.
 - Update state and affected planning files before regeneration.
 - For textbook and themed class-meeting decks, record evaluated current-case and authentic-photo candidates, including rejected items when the rejection prevents a likely future mistake. Accepted items require teaching purpose, verified source/date, rights status, target pages, and fidelity constraints.
 - Run `scripts/validate_project.py` at `PLANNING_READY`, after accepted corrections, and before full production.
 
-The validator checks structure and cross-references. It does not replace editorial review of facts, wording, layout rationale, or visual quality.
+The validator checks planning files, packaged font files, structure, component specifications, and cross-references. It does not replace editorial or visual review.

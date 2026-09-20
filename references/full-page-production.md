@@ -26,6 +26,17 @@ slides/slide-07.png
 
 Keep OCR, montages, reports, and render-back output under `.work/`. Delete a failed candidate. Promote a passing candidate only after it opens, is uniform 16:9, matches locked copy, passes visual review, and fits its family. Do not create `v2`, `v3`, `旧版`, `修改版`, `final-final`, or backup variants.
 
+## Family Montage Gate
+
+Generate pages by family. For every family with two or more pages:
+
+1. create `.work/montages/<family>.jpg` containing every current family page in page order;
+2. compare every member with the mother page and each declared component specification;
+3. check fixed traits, confirm that differences are permitted variables, and reject forbidden drift;
+4. record the family result as `PASS` only after inspecting all members together.
+
+Regenerating any family member invalidates the previous family result. Refresh the montage and inspect the complete family again; checking only the changed page is insufficient. Do not begin PDF packaging while any repeated family lacks a current passing montage review.
+
 ## Pre-Generation Gate
 
 Do not generate until the plan and prompt answer:
@@ -54,7 +65,7 @@ For each page:
 4. Run technical and copy checks, then inspect hierarchy, readability, content fidelity, subject plausibility, family consistency, and generic-AI traits.
    When an authentic photo is referenced, also compare identity, place, event context, and factual meaning against the source. Reject a page that turns documentary evidence into a fabricated scene.
 5. Delete a failed candidate and record the defect. Promote only a page marked `PASS`.
-6. Refresh the relevant family montage after an accepted page or repair.
+6. Refresh and re-inspect the complete family montage after an accepted page or repair.
 
 Keep approved pages unchanged unless a later correction affects them. For a family defect, update the family prompt and regenerate the complete affected family.
 
@@ -69,6 +80,7 @@ Use stable codes:
 | `EXTRA_TEXT` | Strengthen the text-free illustration zone; remove books, signs, screens, and packaging |
 | `LAYOUT_OVERFLOW` | Rebalance groups or request a permitted split |
 | `STYLE_DRIFT` | Reinforce fingerprint and family invariants |
+| `COMPONENT_DRIFT` | Restate the exact fixed, variable, and forbidden traits; regenerate the affected family page |
 | `IMAGE_DEFECT` | Simplify subjects, actions, and spatial relationships |
 | `FULL_BLEED_FAILURE` | Restate edge-to-edge canvas and remove border-like framing |
 | `DUPLICATE_PAGE` | Restore page-specific content evidence and goal |

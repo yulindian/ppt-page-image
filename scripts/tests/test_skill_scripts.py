@@ -194,6 +194,8 @@ class ProjectStateValidationTests(unittest.TestCase):
     def write_project(self, root: Path, font_roles=None):
         for name in ("PPT内容大纲.txt", "风格提示词.txt", "字体说明.txt"):
             (root / name).write_text("已规划\n", encoding="utf-8")
+        fonts_dir = root / "fonts"
+        fonts_dir.mkdir()
         state = {
             "schema_version": 1,
             "deck": {"name": "Demo", "expected_pages": 2},
@@ -230,6 +232,8 @@ class ProjectStateValidationTests(unittest.TestCase):
         state_path = root / ".work" / "project-state.json"
         state_path.parent.mkdir()
         state_path.write_text(json.dumps(state, ensure_ascii=False), encoding="utf-8")
+        for font in state["fonts"]:
+            (fonts_dir / font["packaged_filename"]).write_bytes(b"font-placeholder")
         return state_path
 
     def test_accepts_consistent_project_state(self):
@@ -251,6 +255,24 @@ class ProjectStateValidationTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "7 font roles"):
                 self.validate_project.validate(state_path, root)
 
+    def test_rejects_missing_packaged_font_file(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            state_path = self.write_project(root)
+            (root / "fonts" / "Body.ttf").unlink()
+
+            with self.assertRaisesRegex(ValueError, "Packaged font file is missing"):
+                self.validate_project.validate(state_path, root)
+
+    def test_rejects_missing_planning_file(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            state_path = self.write_project(root)
+            (root / "风格提示词.txt").unlink()
+
+            with self.assertRaisesRegex(ValueError, "Required planning file is missing or empty"):
+                self.validate_project.validate(state_path, root)
+
     def test_rejects_accepted_enrichment_without_source_and_rights(self):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)
@@ -268,6 +290,57 @@ class ProjectStateValidationTests(unittest.TestCase):
 
             with self.assertRaisesRegex(ValueError, "source.*rights_status"):
                 self.validate_project.validate(state_path, root)
+
+    def test_rejects_repeated_family_without_component_specifications(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            state_path = self.write_project(root)
+            state = json.loads(state_path.read_text(encoding="utf-8"))
+            state["families"] = {
+                "body": {
+                    "mother_page": 1,
+                    "pages": [1, 2],
+                    "invariants": ["统一标题系统"],
+                }
+            }
+            for page in state["pages"]:
+                page["family"] = "body"
+            state_path.write_text(json.dumps(state, ensure_ascii=False), encoding="utf-8")
+
+            with self.assertRaisesRegex(ValueError, "component_specifications"):
+                self.validate_project.validate(state_path, root)
+
+    def test_accepts_repeated_family_with_verifiable_component_specifications(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            state_path = self.write_project(root)
+            state = json.loads(state_path.read_text(encoding="utf-8"))
+            state["families"] = {
+                "body": {
+                    "mother_page": 1,
+                    "pages": [1, 2],
+                    "invariants": ["统一标题系统"],
+                    "component_specifications": [
+                        {
+                            "name": "section_title",
+                            "applies_to": [1, 2],
+                            "fixed": [
+                                "top-left position",
+                                "navy title color",
+                                "same baseline and spacing",
+                            ],
+                            "variable": ["section number", "title copy"],
+                            "forbidden": ["gradient", "shadow", "separate number badge"],
+                        }
+                    ],
+                }
+            }
+            for page in state["pages"]:
+                page["family"] = "body"
+            state_path.write_text(json.dumps(state, ensure_ascii=False), encoding="utf-8")
+
+            result = self.validate_project.validate(state_path, root)
+            self.assertEqual(result["families"], 1)
 
 
 if __name__ == "__main__":
