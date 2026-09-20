@@ -59,7 +59,7 @@ Packaged fonts support later repair and provide visual targets. They do not prov
 Package only `PASS` images in natural filename order:
 
 ```powershell
-python scripts/images_to_pdf.py --slides-dir <slides-dir> --out .work/<name>.candidate.pdf --expected-pages <N> --quality 95
+python -X utf8 scripts/images_to_pdf.py --slides-dir <workspace>/slides --out <workspace>/reports/<name>.candidate.pdf --expected-pages <N> --quality 95
 ```
 
 Use `--mode lossless` when JPEG compression visibly damages dense Chinese, formulas, or thin lines. This mode preserves the source image encoding instead of recompressing PNG pages as JPEG.
@@ -67,13 +67,13 @@ Use `--mode lossless` when JPEG compression visibly damages dense Chinese, formu
 Render every candidate page back to an image:
 
 ```powershell
-python scripts/render_pdf.py --pdf .work/<name>.candidate.pdf --out-dir .work/render-back --expected-pages <N>
+python -X utf8 scripts/render_pdf.py --pdf <workspace>/reports/<name>.candidate.pdf --out-dir <workspace>/render-back --expected-pages <N>
 ```
 
 Inspect every rendered page and the montage for order, borders, crop, clarity, color, and text. Recheck the first, last, densest, and every regenerated page at readable scale. Promote only after this passes. Render the promoted final PDF again and record the actual review:
 
 ```powershell
-python scripts/render_pdf.py --pdf <delivery>/<name>.pdf --out-dir .work/render-back-final --expected-pages <N> --inspection pass --notes "Inspected every page and montage"
+python -X utf8 scripts/render_pdf.py --pdf <workspace>/reports/<name>.candidate.pdf --out-dir <workspace>/render-back --expected-pages <N> --inspection pass --notes "Inspected every page and montage"
 ```
 
 The report contains the final PDF hash. Any later PDF change invalidates it.
@@ -90,12 +90,12 @@ The report contains the final PDF hash. Any later PDF change invalidates it.
 `-- images/                  optional
 ```
 
-When `images/` exists, it must be nonempty and every asset must be registered in `风格提示词.txt` with source, role, and page use. Keep samples, slides, candidates, OCR, montages, reports, render output, state, PPTX, and old versions outside the delivery folder.
+When `images/` exists, it must be nonempty and every asset must be registered in project state and generated `风格提示词.txt` with source, role, and page use. Samples, slides, changed pages, prior pages, failed pages, candidates, OCR, montages, reports, render output, state, PPTX, and old versions are process artifacts and must remain outside the delivery folder.
 
 Validate the clean directory against the matching render-back report:
 
 ```powershell
-python scripts/validate_delivery.py --delivery-dir <delivery> --deck-name <name> --expected-pages <N> --render-report .work/render-back-final/render-back-report.json
+python -X utf8 scripts/promote_delivery.py --state <workspace>/project-state.json --workspace <workspace> --pdf <workspace>/reports/<name>.candidate.pdf --delivery-dir <delivery> --render-report <workspace>/render-back/render-back-report.json
 ```
 
-The validator checks required files, registered assets, PDF page count and 16:9 size, one image per page, absence of a text layer, and a passing hash-matched render-back report. Do not report completion unless it passes.
+Promotion first checks the schema-v2 delivery gate, builds a sibling staging directory, copies only managed final artifacts, validates the staged package, and then switches it into place. An existing managed delivery is preserved under workspace history; a target containing unrelated user files is never overwritten. Do not report completion unless promotion and final validation pass.

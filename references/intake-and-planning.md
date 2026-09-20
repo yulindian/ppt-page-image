@@ -2,6 +2,10 @@
 
 Read this before style work or page generation.
 
+## Workspace And Delivery
+
+Choose two distinct locations at intake: an external production workspace and the final delivery directory. The workspace contains state, generated planning drafts, fonts, current slides, candidate or changed pages, history, OCR, montages, reports, and render-back output. The final directory contains only promoted final deliverables. Never place the workspace inside the final directory.
+
 ## Intake
 
 Extract or confirm the PPT name, audience, use scenario, language, page count, output location, exact visible copy, facts, names, dates, formulas, pinyin, answers, style inputs, fonts, forbidden elements, fixed structure, source authority, and review cadence. Infer low-impact gaps and record assumptions. Ask only when a missing choice materially changes content authority, audience fit, ownership, page count, or delivery.

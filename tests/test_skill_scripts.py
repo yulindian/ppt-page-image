@@ -9,7 +9,7 @@ import pymupdf
 from PIL import Image
 
 
-SCRIPTS_DIR = Path(__file__).resolve().parents[1]
+SCRIPTS_DIR = Path(__file__).resolve().parents[1] / "scripts"
 
 
 def load_module(name: str, filename: str):

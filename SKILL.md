@@ -14,7 +14,8 @@ Create a presentation whose pages are complete 16:9 images and whose final artif
 - Generate every page as one complete image containing all visible text and visuals. A flattened composition assembled from separate layers does not qualify.
 - Repair by regenerating the complete page. Never overlay text, patch a region, replace a crop, or switch to native PPT objects.
 - Preserve locked copy, facts, page count, and user corrections. If fixed copy and fixed page count cannot remain readable together, stop and ask which constraint may change.
-- Finish the planning package before final-page generation: `PPT内容大纲.txt`, `风格提示词.txt`, `字体说明.txt`, and a nonempty `fonts/` package.
+- Keep the external production workspace and final delivery directory separate. Every candidate, changed page, prior page, failed page, montage, OCR file, render-back, report, state file, and current `slides/` page is a process artifact and must never enter or remain in the final directory.
+- Finish schema-v2 project state and generate `PPT内容大纲.txt`, `风格提示词.txt`, and `字体说明.txt` before final-page generation. Package a nonempty `fonts/` directory in the workspace.
 - Deliver PDF, the three planning files, and `fonts/`. Add `images/` only for useful retained repair or source assets. Do not deliver PPTX unless separately requested.
 
 **REQUIRED SUB-SKILL:** Use `imagegen` for style samples and all page images.
@@ -26,16 +27,16 @@ Create a presentation whose pages are complete 16:9 images and whose final artif
 1. Read all materials and list active user rules with `python -X utf8 scripts/record_correction.py list-active`. The mutable rule store lives under the user's Codex state directory; `references/learned-rules.json` is immutable promoted-rule history. Read [intake and planning](references/intake-and-planning.md), assign source roles, resolve conflicts, lock exact copy, and define the ordered page list. For textbook lessons and themed class meetings, also evaluate relevant current cases and authentic-photo opportunities before layout planning.
 2. Read [style and prompts](references/style-and-prompts.md). If no usable style reference or prompt exists, generate four materially different complete-page samples from the same representative content, recommend one, and stop for selection. Skip only when the user explicitly authorizes autonomous style choice.
 3. After selection, record useful traits, rejected traits, and a style fingerprint. Treat composition as an optional layout family, not a deck-wide template.
-4. Read [planning package](references/planning-package.md). Create the three planning files, package fonts, define page families and their component specifications, and create `.work/project-state.json` from [project state](references/project-state.md). **Planning hard gate:** do not generate pilot or final pages until `scripts/validate_project.py` passes against those completed artifacts.
-5. Read [full-page production](references/full-page-production.md). Generate and review up to five high-risk representatives, including mother pages for repeated families. Show the pilot montage and stop for approval unless the user waived this gate.
-6. Generate remaining pages by family. Before a repeated family can pass, create its family montage and verify every member against the same component specifications. Keep process output under `.work/`.
+4. Read [planning package](references/planning-package.md) and [project state](references/project-state.md). Create an external workspace outside the final directory, write schema-v2 `project-state.json`, package fonts, generate the three planning files under workspace `planning/`, and pass the `planning` gate. Do not generate pilot or final pages before it passes.
+5. Read [full-page production](references/full-page-production.md). If the user names pilot pages, use exactly those pages; for example, “先做前五页” means pages 1–5. Otherwise generate up to five high-risk representatives, including mother pages for repeated families. Show the pilot montage and stop for approval unless the user waived this gate.
+6. Generate remaining pages by family inside the external workspace. Before a repeated family can pass, create its family montage and verify every member against the same component specifications.
 7. Read [QA and delivery](references/qa-and-delivery.md). Audit pages, page families, and the whole-deck montage. Package only passing pages into a candidate PDF.
-8. Render the candidate PDF back with `scripts/render_pdf.py`, inspect every rendered page and montage, then record inspection as `pass`. Promote the PDF only after this check.
-9. Run `scripts/validate_delivery.py` with the matching render-back report. Clean process artifacts from the delivery folder and validate again before reporting completion.
+8. Render the candidate PDF back inside the workspace, inspect every rendered page and montage, record inspection as `pass`, and advance state only with the required evidence.
+9. Promote through `scripts/promote_delivery.py`. It stages and validates only final artifacts, preserves a previous managed delivery under workspace history, and refuses to overwrite unrelated user files.
 
 ## Project State
 
-Track production in `.work/project-state.json`; do not deliver it. Use these states:
+Track production in external workspace `project-state.json`; do not deliver it. Use these states:
 
 ```text
 INTAKE → STYLE_SAMPLING → STYLE_SELECTED → PLANNING_READY
@@ -43,7 +44,7 @@ INTAKE → STYLE_SAMPLING → STYLE_SELECTED → PLANNING_READY
 → QA → PDF_RENDER_CHECK → DELIVERY_READY
 ```
 
-The state file records deck name, page count, every page's locked copy and prompt, font roles, page-family membership, mother pages, family invariants, and QA status. A content correction returns the project to `PLANNING_READY`; a visual repair returns it to the earliest affected production state.
+The schema-v2 state is the only editable planning authority and records deck, style, fonts, pages, families, prompts, approved-image hashes, defects, reviews, and delivery registration. Generate the three planning files from it. A content correction returns the project to `PLANNING_READY`; a visual repair returns it to the earliest affected production state and invalidates downstream reviews.
 
 For textbook and themed class-meeting decks, record accepted or rejected enrichment candidates: teaching relevance, verified facts, date, source, rights status, target pages, and whether an authentic photo is used as a generation reference. Current events and real photos are evidence, not decoration; omit them when they do not improve comprehension, transfer, discussion, or credibility.
 
@@ -70,7 +71,7 @@ Reject prompts or pages that rely on generic spectacle, template slogans, purpos
 
 ## Corrections And Retry Boundary
 
-Read [learning and corrections](references/learning-and-corrections.md) whenever the user corrects content, style, layout, QA, or delivery. Record persistent rules with `scripts/record_correction.py`, update every affected planning artifact first, then regenerate complete affected pages.
+Read [learning and corrections](references/learning-and-corrections.md) whenever the user corrects content, style, layout, QA, or delivery. Record persistent rules with `python -X utf8 scripts/record_correction.py`, update project state, regenerate the three planning files, then regenerate complete affected pages inside the workspace.
 
 Default correction scope is the named page. Expand to the complete family when the complaint concerns consistency; update its component specifications and regenerate the family montage before acceptance. Keep unrelated approved pages unchanged.
 
@@ -79,12 +80,12 @@ For every failed generation, record a stable defect code, visible problem, suspe
 ## Delivery Commands
 
 ```powershell
-python scripts/validate_project.py --state .work/project-state.json --project-dir <project-dir>
-python scripts/images_to_pdf.py --slides-dir <slides-dir> --out .work/<name>.candidate.pdf --expected-pages <N>
-python scripts/render_pdf.py --pdf .work/<name>.candidate.pdf --out-dir .work/render-back --expected-pages <N>
-# Inspect every rendered page and montage, then rerun against the promoted PDF with an inspection record.
-python scripts/render_pdf.py --pdf <delivery>/<name>.pdf --out-dir .work/render-back-final --expected-pages <N> --inspection pass --notes "Inspected every page and montage"
-python scripts/validate_delivery.py --delivery-dir <delivery> --deck-name <name> --expected-pages <N> --render-report .work/render-back-final/render-back-report.json
+python -X utf8 scripts/generate_planning_files.py --state <workspace>/project-state.json --out-dir <workspace>/planning
+python -X utf8 scripts/validate_project.py --state <workspace>/project-state.json --workspace <workspace> --gate planning
+python -X utf8 scripts/images_to_pdf.py --slides-dir <workspace>/slides --out <workspace>/reports/<name>.candidate.pdf --expected-pages <N>
+python -X utf8 scripts/render_pdf.py --pdf <workspace>/reports/<name>.candidate.pdf --out-dir <workspace>/render-back --expected-pages <N> --inspection pass --notes "Inspected every page and montage"
+python -X utf8 scripts/validate_project.py --state <workspace>/project-state.json --workspace <workspace> --gate delivery
+python -X utf8 scripts/promote_delivery.py --state <workspace>/project-state.json --workspace <workspace> --pdf <workspace>/reports/<name>.candidate.pdf --delivery-dir <delivery> --render-report <workspace>/render-back/render-back-report.json
 ```
 
 Use quality 92–95 for dense text. Use `--mode lossless` when JPEG compression visibly damages text or thin lines.

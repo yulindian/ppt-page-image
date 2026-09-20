@@ -4,7 +4,7 @@ Read this before pilot or final-page generation.
 
 ## Pilot Gate
 
-Generate up to five high-risk representatives, or the entire deck when it has fewer than five. Select without duplication:
+When the user explicitly names pilot pages or a range, use exactly that selection; “先做前五页” means pages 1–5. Otherwise generate up to five high-risk representatives, or the entire deck when it has fewer than five. Select without duplication:
 
 1. cover or primary title page;
 2. mother page of the most common body family;
@@ -16,21 +16,21 @@ Run page and family QA, create a montage, recommend changes, and stop for approv
 
 ## Files And Promotion
 
-Keep one current file and at most one candidate per page:
+Keep one current file and at most one candidate per page inside the external workspace:
 
 ```text
-slides/slide-07.png
-.work/candidates/slide-07.new.png
-.work/project-state.json
+<workspace>/slides/slide-07.png
+<workspace>/candidates/slide-07.new.png
+<workspace>/project-state.json
 ```
 
-Keep OCR, montages, reports, and render-back output under `.work/`. Delete a failed candidate. Promote a passing candidate only after it opens, is uniform 16:9, matches locked copy, passes visual review, and fits its family. Do not create `v2`, `v3`, `旧版`, `修改版`, `final-final`, or backup variants.
+Keep OCR, montages, reports, render-back output, candidates, changed pages, prior pages, and failed pages only in the external workspace. None may enter or remain in the final directory. Delete or move a failed candidate to workspace history. Promote a passing candidate to workspace `slides/` only after it opens, is uniform 16:9, matches locked copy, passes visual review, and fits its family. Do not create visible `v2`, `v3`, `旧版`, `修改版`, `final-final`, or backup variants.
 
 ## Family Montage Gate
 
 Generate pages by family. For every family with two or more pages:
 
-1. create `.work/montages/<family>.jpg` containing every current family page in page order;
+1. create `<workspace>/montages/<family>.jpg` containing every current family page in page order;
 2. compare every member with the mother page and each declared component specification;
 3. check fixed traits, confirm that differences are permitted variables, and reject forbidden drift;
 4. record the family result as `PASS` only after inspecting all members together.
