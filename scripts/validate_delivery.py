@@ -2,6 +2,7 @@
 import argparse
 import hashlib
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -9,13 +10,36 @@ import pymupdf
 
 FONT_SUFFIXES = {".ttf", ".otf", ".ttc"}
 IMAGE_SUFFIXES = {".png", ".jpg", ".jpeg", ".webp", ".tif", ".tiff"}
-STALE_NAME_TOKENS = ("v2", "v3", "旧版", "修改版", "final-final", "candidate", "backup", "备份")
-PROCESS_ITEM_NAMES = {".work", "slides", "preview", "previews", "render", "renders", "ocr", "montage", "montages", "reports"}
+STALE_NAME_TOKENS = ("旧版", "修改版", "备份", "修改前", "调整前", "候选", "过程")
+STALE_LATIN_PATTERN = re.compile(
+    r"(?:^|[._\- ])(?:v2|v3|old|previous|final-final|candidate|backup)(?:$|[._\- ])",
+    re.IGNORECASE,
+)
+PROCESS_ITEM_NAMES = {
+    ".work",
+    "slides",
+    "candidates",
+    "history",
+    "preview",
+    "previews",
+    "render",
+    "renders",
+    "render-back",
+    "ocr",
+    "montage",
+    "montages",
+    "reports",
+    "project-state.json",
+}
 
 
 def has_stale_or_process_name(path: Path) -> bool:
     lowered = path.name.lower()
-    return path.name in PROCESS_ITEM_NAMES or any(token in lowered for token in STALE_NAME_TOKENS)
+    return (
+        lowered in PROCESS_ITEM_NAMES
+        or any(token in path.name for token in STALE_NAME_TOKENS)
+        or STALE_LATIN_PATTERN.search(lowered) is not None
+    )
 
 
 def file_sha256(path: Path) -> str:

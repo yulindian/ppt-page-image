@@ -128,6 +128,20 @@ class DeliveryContractTests(unittest.TestCase):
             self.assertNotEqual(result.returncode, 0)
             self.assertIn("old or process", result.stderr.lower())
 
+    def test_rejects_changed_page_artifact_inside_images(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp) / "delivery"
+            self.make_delivery(root, include_images=True)
+            changed = root / "images" / "第1页_调整前.png"
+            changed.write_bytes(b"old page")
+            (root / "风格提示词.txt").write_text(
+                "素材登记：slide-01.png 用于第01页参考\n第1页_调整前.png",
+                encoding="utf-8",
+            )
+            result = self.validate(root)
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("old or process", result.stderr.lower())
+
     def test_rejects_unregistered_font_file(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp) / "delivery"
